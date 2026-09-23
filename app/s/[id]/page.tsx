@@ -3,6 +3,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import CopyButton from "@/app/components/copy-button";
+import ShareUrlField from "@/app/components/share-url-field";
 import {
   SHARE_ID_PATTERN,
   formatBytes,
@@ -107,13 +108,7 @@ export default async function SharePage(props: PageProps<"/s/[id]">) {
         </h1>
 
         <div className="mt-6 flex gap-3">
-          <input
-            readOnly
-            value={`/s/${share.id}`}
-            onFocus={(event) => event.currentTarget.select()}
-            className="h-10 flex-1 rounded-full border border-white/12 bg-black/40 px-5 font-mono text-sm outline-none focus:border-accent/50"
-            aria-label="Share URL"
-          />
+          <ShareUrlField value={`/s/${share.id}`} />
           <CopyButton />
         </div>
 
