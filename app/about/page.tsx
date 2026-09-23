@@ -31,7 +31,7 @@ const highlights = [
 const gaps = [
   "100 MB per file, 50 files and 50 links per share.",
   "Shares are public — anyone with the URL can open them. Don't put anything secret in one.",
-  "No accounts, no expiry and no deletion UI yet; a share lives until it's removed from storage.",
+  "No viewer accounts and no expiry; a share lives until an admin deletes it from /admin.",
   "Links must be http(s) — anything else (javascript:, data:) is rejected.",
 ];
 
