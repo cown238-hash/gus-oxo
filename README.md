@@ -1,7 +1,7 @@
-# Droplink
+# GSO
 
-Upload files and paste links, get one shareable URL back. Built with Next.js (App Router),
-Tailwind CSS v4 and Vercel Blob.
+Upload files and paste links, get one shareable URL back — the GSO sharing site. Built with
+Next.js (App Router), Tailwind CSS v4 and Vercel Blob.
 
 ## Setup
 
@@ -33,10 +33,11 @@ Until then, the UI shows a clear "storage isn't configured" message instead of f
 
 | Route | Purpose |
 | --- | --- |
-| `/` | Uploader: drag files or paste URLs |
+| `/` | Uploader: drag files or paste URLs, plus the file-category reference |
+| `/about` | About GSO: how it works, categories, limits and honest gaps |
 | `/api/blob` | `GET` reports whether storage is configured; `POST` issues short-lived client upload tokens |
 | `/api/shares` | Validates a payload and writes the share index to Blob storage |
-| `/s/[id]` | Renders one share: files with download links, plus URLs |
+| `/s/[id]` | Renders one share: files with category badges and a filter, plus URLs |
 
 **Files upload straight from the browser to Blob storage.** The server only mints a token,
 so uploads aren't limited by the platform's 4.5 MB request-body cap — the per-file ceiling is
@@ -45,6 +46,10 @@ so uploads aren't limited by the platform's 4.5 MB request-body cap — the per-
 Share metadata lives at `shares/{id}.json` in the same store, so there's no database. The
 index is validated with a type guard (`isShare` in `app/lib/share.ts`) on read, and the id is
 checked against `SHARE_ID_PATTERN` before it's interpolated into a storage pathname.
+
+**File categories** are derived from the extension (`fileCategory` in `app/lib/share.ts`):
+Image, Video, Audio, Document, Archive or Other. They're display-only — nothing is stored,
+so existing shares pick up badges and filtering without migration.
 
 ## Limits
 

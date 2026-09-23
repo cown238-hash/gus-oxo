@@ -13,7 +13,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Droplink — Upload & share files and links",
+  title: "GSO — Upload & share files and links",
   description:
     "Drop a file or paste a link, get one shareable URL in seconds. Fast, private, no account required.",
 };

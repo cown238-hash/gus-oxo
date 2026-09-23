@@ -3,13 +3,11 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import CopyButton from "@/app/components/copy-button";
+import FileList from "@/app/components/file-list";
 import ShareUrlField from "@/app/components/share-url-field";
-import {
-  SHARE_ID_PATTERN,
-  formatBytes,
-  isShare,
-  type Share,
-} from "@/app/lib/share";
+import SiteFooter from "@/app/components/site-footer";
+import SiteHeader from "@/app/components/site-header";
+import { SHARE_ID_PATTERN, isShare, type Share } from "@/app/lib/share";
 
 async function loadShare(id: string): Promise<Share | null> {
   const result = await get(`shares/${id}.json`, { access: "public" });
@@ -29,10 +27,10 @@ export async function generateMetadata(
   props: PageProps<"/s/[id]">,
 ): Promise<Metadata> {
   const { id } = await props.params;
-  if (!SHARE_ID_PATTERN.test(id)) return { title: "Not found — Droplink" };
+  if (!SHARE_ID_PATTERN.test(id)) return { title: "Not found — GSO" };
   return {
-    title: `Share ${id} — Droplink`,
-    description: "Files and links shared with Droplink.",
+    title: `Share ${id} — GSO`,
+    description: "Files and links shared with GSO.",
   };
 }
 
@@ -82,19 +80,9 @@ export default async function SharePage(props: PageProps<"/s/[id]">) {
       <div className="glow pointer-events-none absolute inset-x-0 top-0 h-96" aria-hidden />
       <div className="grid-overlay pointer-events-none absolute inset-x-0 top-0 h-96" aria-hidden />
 
-      <header className="relative z-10 border-b border-white/5 bg-background/70 backdrop-blur-md">
-        <nav className="mx-auto flex h-16 w-full max-w-3xl items-center justify-between px-6">
-          <Link href="/" className="text-sm font-semibold tracking-tight">
-            droplink<span className="text-accent">.</span>
-          </Link>
-          <Link
-            href="/"
-            className="rounded-full border border-white/12 px-4 py-1.5 text-sm transition-colors hover:border-accent/50 hover:bg-accent/10"
-          >
-            New share
-          </Link>
-        </nav>
-      </header>
+      <div className="relative z-10">
+        <SiteHeader size="narrow" />
+      </div>
 
       <main className="relative z-10 mx-auto w-full max-w-3xl px-6 py-16">
         <p className="text-xs uppercase tracking-[0.2em] text-muted">
@@ -117,34 +105,7 @@ export default async function SharePage(props: PageProps<"/s/[id]">) {
             <h2 className="border-b border-white/8 pb-4 text-lg font-semibold tracking-tight">
               Files
             </h2>
-            <ul className="mt-5 space-y-3">
-              {share.files.map((file) => (
-                <li
-                  key={file.url}
-                  className="flex items-center justify-between gap-4 rounded-2xl border border-white/8 bg-white/[0.03] px-5 py-4 transition-colors hover:border-accent/40"
-                >
-                  <div className="flex min-w-0 flex-col gap-0.5">
-                    <a
-                      href={file.url}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="truncate text-sm font-medium hover:text-accent"
-                    >
-                      {file.name}
-                    </a>
-                    <span className="font-mono text-xs text-muted">
-                      {formatBytes(file.size)}
-                    </span>
-                  </div>
-                  <a
-                    href={file.downloadUrl}
-                    className="shrink-0 rounded-full border border-white/12 px-4 py-1.5 text-sm transition-colors hover:border-accent/50 hover:bg-white/5"
-                  >
-                    Download
-                  </a>
-                </li>
-              ))}
-            </ul>
+            <FileList files={share.files} />
           </section>
         )}
 
@@ -184,6 +145,10 @@ export default async function SharePage(props: PageProps<"/s/[id]">) {
           attached to them.
         </p>
       </main>
+
+      <div className="relative z-10">
+        <SiteFooter size="narrow" />
+      </div>
     </div>
   );
 }

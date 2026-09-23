@@ -1,4 +1,7 @@
+import SiteFooter from "./components/site-footer";
+import SiteHeader from "./components/site-header";
 import Uploader from "./components/uploader";
+import { CATEGORY_META, FILE_CATEGORIES } from "./lib/share";
 
 const steps = [
   {
@@ -25,27 +28,7 @@ export default function Home() {
   return (
     <div className="relative flex min-h-full flex-col">
       {/* Header */}
-      <header className="sticky top-0 z-50 border-b border-white/5 bg-background/70 backdrop-blur-md">
-        <nav className="mx-auto flex h-16 w-full max-w-5xl items-center justify-between px-6">
-          <a href="#top" className="text-sm font-semibold tracking-tight">
-            droplink<span className="text-accent">.</span>
-          </a>
-          <div className="flex items-center gap-1 sm:gap-2">
-            <a
-              href="#how"
-              className="rounded-full px-3 py-1.5 text-sm text-muted transition-colors hover:text-foreground"
-            >
-              How it works
-            </a>
-            <a
-              href="#upload"
-              className="ml-2 hidden rounded-full border border-white/12 px-4 py-1.5 text-sm transition-colors hover:border-accent/50 hover:bg-accent/10 sm:block"
-            >
-              Upload
-            </a>
-          </div>
-        </nav>
-      </header>
+      <SiteHeader />
 
       {/* Hero + uploader */}
       <section id="top" className="relative overflow-hidden">
@@ -117,21 +100,62 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Footer */}
-      <footer className="mt-auto border-t border-white/5">
-        <div className="mx-auto flex w-full max-w-5xl flex-col items-center justify-between gap-4 px-6 py-8 text-sm text-muted sm:flex-row">
-          <p>
-            © {new Date().getFullYear()} Droplink. Shared links are public to
-            anyone who has them.
-          </p>
-          <a
-            href="#upload"
-            className="transition-colors hover:text-foreground"
-          >
-            Upload something ↑
-          </a>
+      {/* File categories */}
+      <section
+        id="categories"
+        className="mx-auto w-full max-w-5xl scroll-mt-24 px-6 py-24"
+      >
+        <div className="flex items-baseline justify-between gap-4 border-b border-white/8 pb-6">
+          <h2 className="text-2xl font-semibold tracking-tight sm:text-3xl">
+            What can you share?
+          </h2>
+          <span className="text-sm text-muted">
+            Categories are automatic
+          </span>
         </div>
-      </footer>
+
+        <div className="mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+          {FILE_CATEGORIES.map((category) => {
+            const meta = CATEGORY_META[category];
+            return (
+              <article
+                key={category}
+                className="group rounded-2xl border border-white/8 bg-white/[0.03] p-6 transition-all duration-300 hover:-translate-y-1 hover:border-accent/40 hover:shadow-[0_20px_60px_-30px] hover:shadow-accent/50"
+              >
+                <div className="flex items-center gap-2.5">
+                  <span
+                    className={`h-2.5 w-2.5 rounded-full ${meta.dot}`}
+                    aria-hidden
+                  />
+                  <h3 className="text-base font-semibold tracking-tight">
+                    {meta.label}
+                  </h3>
+                </div>
+                <p className="mt-3 text-sm leading-6 text-muted">
+                  {meta.blurb}
+                </p>
+                <p className="mt-4 break-words font-mono text-xs text-muted/80">
+                  {meta.examples}
+                </p>
+              </article>
+            );
+          })}
+        </div>
+
+        <p className="mt-8 text-sm text-muted">
+          Every file is tagged from its extension and shown as a badge on the
+          share page — shares with mixed types also get a filter bar.{" "}
+          <a
+            href="/about#categories"
+            className="text-foreground underline underline-offset-4 transition-colors hover:text-accent"
+          >
+            How categories work →
+          </a>
+        </p>
+      </section>
+
+      {/* Footer */}
+      <SiteFooter />
     </div>
   );
 }

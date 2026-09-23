@@ -2,10 +2,12 @@
 
 import { upload } from "@vercel/blob/client";
 import { useRef, useState } from "react";
+import CategoryBadge from "./category-badge";
 import {
   MAX_FILES,
   MAX_FILE_SIZE,
   MAX_LINKS,
+  fileCategory,
   formatBytes,
   normalizeUrl,
   safeFileName,
@@ -213,9 +215,16 @@ export default function Uploader() {
         </div>
 
         <div className="mt-6 flex flex-wrap items-center justify-between gap-4 text-sm text-muted">
-          <span>
-            {files.length} file{files.length === 1 ? "" : "s"} · {links.length}{" "}
-            link{links.length === 1 ? "" : "s"}
+          <span className="flex flex-wrap items-center gap-2">
+            <span>
+              {files.length} file{files.length === 1 ? "" : "s"} ·{" "}
+              {links.length} link{links.length === 1 ? "" : "s"}
+            </span>
+            {[
+              ...new Set(files.map((file) => fileCategory(file.name))),
+            ].map((category) => (
+              <CategoryBadge key={category} category={category} />
+            ))}
           </span>
           <button
             onClick={reset}
@@ -334,6 +343,7 @@ export default function Uploader() {
               className="flex items-center justify-between gap-4 rounded-xl border border-white/8 bg-black/30 px-4 py-2.5"
             >
               <div className="flex min-w-0 items-center gap-3">
+                <CategoryBadge category={fileCategory(file.name)} />
                 <span className="truncate text-sm">{file.name}</span>
                 <span className="shrink-0 font-mono text-xs text-muted">
                   {formatBytes(file.size)}
