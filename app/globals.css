@@ -1,0 +1,76 @@
+@import "tailwindcss";
+
+:root {
+  --background: #07070b;
+  --foreground: #e9e9f0;
+  --muted: #9a9aa8;
+  --accent: #7c8cff;
+  --accent-2: #b07cff;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-muted: var(--muted);
+  --color-accent: var(--accent);
+  --color-accent-2: var(--accent-2);
+  --font-sans: var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono);
+}
+
+html {
+  scroll-behavior: smooth;
+  color-scheme: dark;
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-geist-sans), system-ui, -apple-system, sans-serif;
+  text-rendering: optimizeLegibility;
+}
+
+::selection {
+  background: color-mix(in oklab, var(--accent) 40%, transparent);
+  color: #fff;
+}
+
+/* Soft radial glow used behind the hero and contact sections */
+.glow {
+  background:
+    radial-gradient(38rem 22rem at 18% 0%, color-mix(in oklab, var(--accent) 26%, transparent), transparent 70%),
+    radial-gradient(32rem 20rem at 85% 12%, color-mix(in oklab, var(--accent-2) 22%, transparent), transparent 70%);
+}
+
+/* Faint blueprint grid overlay */
+.grid-overlay {
+  background-image:
+    linear-gradient(to right, rgb(255 255 255 / 0.045) 1px, transparent 1px),
+    linear-gradient(to bottom, rgb(255 255 255 / 0.045) 1px, transparent 1px);
+  background-size: 72px 72px;
+  mask-image: radial-gradient(ellipse 90% 70% at 50% 0%, #000 40%, transparent 100%);
+}
+
+@keyframes fade-up {
+  from {
+    opacity: 0;
+    transform: translateY(18px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+.fade-up {
+  animation: fade-up 0.7s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  .fade-up {
+    animation: none;
+  }
+}
