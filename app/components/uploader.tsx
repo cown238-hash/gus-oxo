@@ -3,6 +3,7 @@
 import { upload } from "@vercel/blob/client";
 import { useRef, useState } from "react";
 import CategoryBadge from "./category-badge";
+import { useToast } from "./toast";
 import {
   MAX_FILES,
   MAX_FILE_SIZE,
@@ -28,6 +29,7 @@ export default function Uploader() {
   const [state, setState] = useState<UploaderState>({ status: "idle" });
   const [copied, setCopied] = useState(false);
   const inputRef = useRef<HTMLInputElement>(null);
+  const toast = useToast();
 
   const busy = state.status === "uploading";
   const hasContents = files.length > 0 || links.length > 0;
@@ -101,9 +103,11 @@ export default function Uploader() {
     try {
       await navigator.clipboard.writeText(state.url);
       setCopied(true);
+      toast("Link copied");
       setTimeout(() => setCopied(false), 2000);
     } catch {
-      // Clipboard can be blocked; the URL stays visible for manual copy.
+      // Clipboard can be blocked; say so instead of failing silently.
+      toast("Couldn't copy — select the URL manually", "error");
     }
   };
 
@@ -182,7 +186,7 @@ export default function Uploader() {
 
   if (state.status === "done") {
     return (
-      <div className="rounded-3xl border border-accent/30 bg-white/[0.03] p-8 shadow-[0_30px_80px_-40px] shadow-accent/60">
+      <div className="fade-up rounded-3xl border border-accent/30 bg-white/[0.03] p-8 shadow-[0_30px_80px_-40px] shadow-accent/60">
         <div className="flex items-center gap-3 text-sm font-medium text-accent">
           <svg
             viewBox="0 0 20 20"
@@ -208,7 +212,7 @@ export default function Uploader() {
           />
           <button
             onClick={copy}
-            className="h-11 shrink-0 rounded-full bg-accent px-6 text-sm font-medium text-background shadow-[0_0_40px_-8px] shadow-accent transition-transform hover:-translate-y-0.5"
+            className="h-11 shrink-0 rounded-full bg-accent px-6 text-sm font-medium text-background shadow-[0_0_40px_-8px] shadow-accent transition-transform hover:-translate-y-0.5 active:scale-[0.98]"
           >
             {copied ? "Copied!" : "Copy link"}
           </button>
@@ -233,6 +237,12 @@ export default function Uploader() {
             Share something else
           </button>
         </div>
+
+        <p className="mt-4 text-xs text-muted">
+          This link never expires — the files stay online until an admin
+          deletes the share, and anyone with the link can download them any
+          time.
+        </p>
       </div>
     );
   }
@@ -268,9 +278,9 @@ export default function Uploader() {
             inputRef.current?.click();
           }
         }}
-        className={`flex cursor-pointer flex-col items-center justify-center rounded-2xl border-2 border-dashed px-6 py-12 text-center transition-colors ${
+        className={`flex cursor-pointer flex-col items-center justify-center rounded-2xl border-2 border-dashed px-6 py-12 text-center transition-all duration-300 ${
           dragging
-            ? "border-accent bg-accent/10"
+            ? "scale-[1.01] border-accent bg-accent/10 shadow-[0_0_60px_-15px] shadow-accent"
             : "border-white/12 hover:border-accent/40 hover:bg-white/[0.02]"
         }`}
       >
@@ -279,7 +289,7 @@ export default function Uploader() {
           fill="none"
           stroke="currentColor"
           strokeWidth="1.5"
-          className="h-8 w-8 text-accent"
+          className="h-8 w-8 text-accent transition-transform duration-300"
           aria-hidden
         >
           <path
@@ -328,7 +338,7 @@ export default function Uploader() {
         />
         <button
           onClick={addLink}
-          className="h-11 shrink-0 rounded-full border border-white/12 px-5 text-sm transition-colors hover:border-accent/50 hover:bg-white/5"
+          className="h-11 shrink-0 rounded-full border border-white/12 px-5 text-sm transition-all hover:border-accent/50 hover:bg-white/5 active:scale-95"
         >
           Add
         </button>
@@ -340,7 +350,7 @@ export default function Uploader() {
           {files.map((file, index) => (
             <li
               key={`${file.name}-${index}`}
-              className="flex items-center justify-between gap-4 rounded-xl border border-white/8 bg-black/30 px-4 py-2.5"
+              className="flex items-center justify-between gap-4 rounded-xl border border-white/8 bg-black/30 px-4 py-2.5 transition-colors hover:border-white/20"
             >
               <div className="flex min-w-0 items-center gap-3">
                 <CategoryBadge category={fileCategory(file.name)} />
@@ -352,7 +362,7 @@ export default function Uploader() {
               <button
                 onClick={() => removeFile(index)}
                 aria-label={`Remove ${file.name}`}
-                className="shrink-0 text-muted transition-colors hover:text-foreground"
+                className="shrink-0 rounded-full p-1.5 text-muted transition-colors hover:bg-white/10 hover:text-foreground active:scale-90"
               >
                 ✕
               </button>
@@ -361,7 +371,7 @@ export default function Uploader() {
           {links.map((link) => (
             <li
               key={link}
-              className="flex items-center justify-between gap-4 rounded-xl border border-white/8 bg-black/30 px-4 py-2.5"
+              className="flex items-center justify-between gap-4 rounded-xl border border-white/8 bg-black/30 px-4 py-2.5 transition-colors hover:border-white/20"
             >
               <span className="truncate font-mono text-sm text-accent/90">
                 {link}
@@ -369,7 +379,7 @@ export default function Uploader() {
               <button
                 onClick={() => removeLink(link)}
                 aria-label={`Remove ${link}`}
-                className="shrink-0 text-muted transition-colors hover:text-foreground"
+                className="shrink-0 rounded-full p-1.5 text-muted transition-colors hover:bg-white/10 hover:text-foreground active:scale-90"
               >
                 ✕
               </button>
@@ -415,7 +425,7 @@ export default function Uploader() {
         <button
           onClick={submit}
           disabled={!hasContents || busy}
-          className="h-11 rounded-full bg-accent px-7 text-sm font-medium text-background shadow-[0_0_40px_-8px] shadow-accent transition-all hover:-translate-y-0.5 disabled:cursor-not-allowed disabled:opacity-40 disabled:shadow-none disabled:hover:translate-y-0"
+          className="h-11 rounded-full bg-accent px-7 text-sm font-medium text-background shadow-[0_0_40px_-8px] shadow-accent transition-all hover:-translate-y-0.5 active:scale-[0.98] disabled:cursor-not-allowed disabled:opacity-40 disabled:shadow-none disabled:hover:translate-y-0"
         >
           {busy ? "Uploading…" : "Create share link"}
         </button>

@@ -19,19 +19,19 @@ export default function SiteHeader({
         <div className="flex items-center gap-1 sm:gap-2">
           <Link
             href="/#how"
-            className="rounded-full px-3 py-1.5 text-sm text-muted transition-colors hover:text-foreground"
+            className="rounded-full px-3 py-1.5 text-sm text-muted transition-all hover:bg-white/5 hover:text-foreground active:scale-[0.97]"
           >
             How it works
           </Link>
           <Link
             href="/about"
-            className="rounded-full px-3 py-1.5 text-sm text-muted transition-colors hover:text-foreground"
+            className="rounded-full px-3 py-1.5 text-sm text-muted transition-all hover:bg-white/5 hover:text-foreground active:scale-[0.97]"
           >
             About
           </Link>
           <Link
             href="/#upload"
-            className="ml-2 hidden rounded-full border border-white/12 px-4 py-1.5 text-sm transition-colors hover:border-accent/50 hover:bg-accent/10 sm:block"
+            className="ml-2 hidden rounded-full border border-white/12 px-4 py-1.5 text-sm transition-all hover:border-accent/50 hover:bg-accent/10 active:scale-[0.97] sm:block"
           >
             Upload
           </Link>

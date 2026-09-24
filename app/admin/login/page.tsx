@@ -24,7 +24,7 @@ export default async function AdminLoginPage() {
         aria-hidden
         className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_50%_15%,rgba(99,102,241,0.16),transparent_55%)]"
       />
-      <div className="relative z-10 flex w-full max-w-sm flex-col items-center text-center">
+      <div className="fade-up relative z-10 flex w-full max-w-sm flex-col items-center text-center">
         <Logo />
         <h1 className="mt-8 text-2xl font-semibold tracking-tight">
           Admin sign in

@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { useToast } from "./toast";
 
 export default function CopyButton({
   label = "Copy link",
@@ -10,14 +11,17 @@ export default function CopyButton({
   className?: string;
 }) {
   const [copied, setCopied] = useState(false);
+  const toast = useToast();
 
   const copy = async () => {
     try {
       await navigator.clipboard.writeText(window.location.href);
       setCopied(true);
+      toast("Link copied");
       setTimeout(() => setCopied(false), 2000);
     } catch {
-      // Clipboard can be blocked by permissions; the URL stays in the address bar.
+      // Clipboard can be blocked by permissions; say so instead of failing silently.
+      toast("Couldn't copy — select the URL manually", "error");
     }
   };
 
@@ -26,7 +30,7 @@ export default function CopyButton({
       onClick={copy}
       className={
         className ??
-        "h-10 shrink-0 rounded-full bg-accent px-5 text-sm font-medium text-background shadow-[0_0_40px_-8px] shadow-accent transition-transform hover:-translate-y-0.5"
+        "h-10 shrink-0 rounded-full bg-accent px-5 text-sm font-medium text-background shadow-[0_0_40px_-8px] shadow-accent transition-transform hover:-translate-y-0.5 active:scale-[0.98]"
       }
     >
       {copied ? "Copied!" : label}

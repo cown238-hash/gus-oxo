@@ -84,7 +84,7 @@ export default async function SharePage(props: PageProps<"/s/[id]">) {
         <SiteHeader size="narrow" />
       </div>
 
-      <main className="relative z-10 mx-auto w-full max-w-3xl px-6 py-16">
+      <main className="fade-up relative z-10 mx-auto w-full max-w-3xl px-6 py-16">
         <p className="text-xs uppercase tracking-[0.2em] text-muted">
           Shared link
         </p>
@@ -142,7 +142,8 @@ export default async function SharePage(props: PageProps<"/s/[id]">) {
 
         <p className="mt-12 text-sm text-muted">
           Anyone with this link can view these items. There&apos;s no account
-          attached to them.
+          attached to them. The files stay online until an admin deletes this
+          share — the link never expires, and downloading never removes them.
         </p>
       </main>
 

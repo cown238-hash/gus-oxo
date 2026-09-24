@@ -6,7 +6,7 @@ export default function NotFound() {
       <div className="glow pointer-events-none absolute inset-0" aria-hidden />
       <div className="grid-overlay pointer-events-none absolute inset-0" aria-hidden />
 
-      <div className="relative">
+      <div className="fade-up relative">
         <p className="font-mono text-sm text-accent">404</p>
         <h1 className="mt-4 text-4xl font-semibold tracking-tight sm:text-5xl">
           This share doesn&apos;t exist
@@ -17,7 +17,7 @@ export default function NotFound() {
         </p>
         <Link
           href="/"
-          className="mt-8 inline-flex h-11 items-center rounded-full bg-accent px-6 text-sm font-medium text-background shadow-[0_0_40px_-8px] shadow-accent transition-transform hover:-translate-y-0.5"
+          className="mt-8 inline-flex h-11 items-center rounded-full bg-accent px-6 text-sm font-medium text-background shadow-[0_0_40px_-8px] shadow-accent transition-transform hover:-translate-y-0.5 active:scale-[0.98]"
         >
           Share something new
         </Link>

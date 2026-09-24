@@ -100,7 +100,7 @@ export default function FileList({ files }: { files: SharedFile[] }) {
             </div>
             <a
               href={file.downloadUrl}
-              className="shrink-0 rounded-full border border-white/12 px-4 py-1.5 text-sm transition-colors hover:border-accent/50 hover:bg-white/5"
+              className="shrink-0 rounded-full border border-white/12 px-4 py-1.5 text-sm transition-all hover:border-accent/50 hover:bg-white/5 active:scale-95"
             >
               Download
             </a>

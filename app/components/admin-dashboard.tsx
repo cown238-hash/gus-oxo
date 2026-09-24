@@ -3,6 +3,7 @@
 import { useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
+import { useToast } from "./toast";
 import type { AdminShareRow } from "@/app/lib/admin-data";
 
 function formatBytes(bytes: number): string {
@@ -44,7 +45,7 @@ function LogoutButton() {
         router.push("/");
         router.refresh();
       }}
-      className="h-9 rounded-full border border-white/12 px-4 text-sm text-muted transition-colors hover:border-accent/50 hover:text-foreground disabled:opacity-50"
+      className="h-9 rounded-full border border-white/12 px-4 text-sm text-muted transition-all hover:border-accent/50 hover:text-foreground active:scale-95 disabled:opacity-50"
     >
       {busy ? "Signing out…" : "Sign out"}
     </button>
@@ -54,6 +55,7 @@ function LogoutButton() {
 /** Row with a two-step delete: first click arms it, second click deletes. */
 function ShareRow({ row }: { row: AdminShareRow }) {
   const router = useRouter();
+  const toast = useToast();
   const [armed, setArmed] = useState(false);
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -81,6 +83,7 @@ function ShareRow({ row }: { row: AdminShareRow }) {
         setArmed(false);
         return;
       }
+      toast("Share deleted");
       router.refresh();
     } catch {
       setError("Could not reach the server.");
@@ -91,7 +94,7 @@ function ShareRow({ row }: { row: AdminShareRow }) {
   };
 
   return (
-    <div className="px-5 py-4 sm:px-6">
+    <div className="px-5 py-4 transition-colors hover:bg-white/[0.02] sm:px-6">
       <div className="flex flex-wrap items-center gap-x-4 gap-y-3">
         <Link
           href={`/s/${row.id}`}
@@ -118,7 +121,7 @@ function ShareRow({ row }: { row: AdminShareRow }) {
           type="button"
           onClick={remove}
           disabled={busy}
-          className={`ml-auto h-9 rounded-full border px-4 text-sm transition-colors disabled:opacity-50 ${
+          className={`ml-auto h-9 rounded-full border px-4 text-sm transition-all active:scale-95 disabled:opacity-50 ${
             armed
               ? "border-red-500/60 bg-red-500/10 text-red-400 hover:bg-red-500/20"
               : "border-white/12 text-muted hover:border-red-500/40 hover:text-red-400"
@@ -178,13 +181,30 @@ export default function AdminDashboard({
       </div>
 
       {rows.length === 0 ? (
-        <div className="mt-8 rounded-3xl border border-white/8 bg-white/[0.03] p-8 text-center">
-          <p className="text-sm text-muted">
-            No shares yet. Upload something on the{" "}
+        <div className="mt-8 rounded-3xl border border-dashed border-white/12 bg-white/[0.02] px-6 py-14 text-center">
+          <span className="mx-auto flex h-12 w-12 items-center justify-center rounded-full border border-accent/30 bg-accent/10">
+            <svg
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="1.5"
+              className="h-6 w-6 text-accent"
+              aria-hidden
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                d="M12 16.5V4.5m0 0L7.5 9M12 4.5 16.5 9M4.5 16.5v1.5a2 2 0 0 0 2 2h11a2 2 0 0 0 2-2v-1.5"
+              />
+            </svg>
+          </span>
+          <p className="mt-4 text-sm font-medium">No shares yet</p>
+          <p className="mt-1 text-sm text-muted">
+            Upload something on the{" "}
             <Link href="/" className="text-accent hover:underline">
               home page
-            </Link>
-            .
+            </Link>{" "}
+            — it will show up here.
           </p>
         </div>
       ) : (
