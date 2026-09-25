@@ -1,8 +1,12 @@
+import type { ReactNode } from "react";
+import Link from "next/link";
 import Reveal from "./components/reveal";
+import ShareCard from "./components/share-card";
 import SiteFooter from "./components/site-footer";
 import SiteHeader from "./components/site-header";
 import Uploader from "./components/uploader";
-import { CATEGORY_META, FILE_CATEGORIES } from "./lib/share";
+import { listPublicShares } from "./lib/browse";
+import { CATEGORY_META, FILE_CATEGORIES, type FileCategory } from "./lib/share";
 
 const steps = [
   {
@@ -25,11 +29,41 @@ const steps = [
   },
 ];
 
-export default function Home() {
+/** Section heading in the portal style: accent bar + title + optional hint
+ *  or trailing action. Wrapped in Reveal by the caller. */
+function SectionHead({
+  title,
+  hint,
+  action,
+}: {
+  title: string;
+  hint?: string;
+  action?: ReactNode;
+}) {
+  return (
+    <div className="flex items-baseline justify-between gap-4 border-b border-white/8 pb-6">
+      <div className="flex items-center gap-3">
+        <span
+          className="h-5 w-1.5 shrink-0 rounded-full bg-accent shadow-[0_0_16px_-2px] shadow-accent"
+          aria-hidden
+        />
+        <h2 className="text-2xl font-semibold tracking-tight sm:text-3xl">
+          {title}
+        </h2>
+        {hint && <span className="hidden text-sm text-muted sm:inline">{hint}</span>}
+      </div>
+      {action}
+    </div>
+  );
+}
+
+export default async function Home() {
+  const latest = await listPublicShares({ pageSize: 8 });
+
   return (
     <div className="relative flex min-h-full flex-col">
       {/* Header */}
-      <SiteHeader />
+      <SiteHeader activeNav="home" />
 
       {/* Hero + uploader */}
       <section id="top" className="relative overflow-hidden">
@@ -63,27 +97,147 @@ export default function Home() {
           </p>
 
           <div
-            id="upload"
-            className="fade-up mt-12 scroll-mt-24"
+            className="fade-up mt-8 flex flex-wrap gap-3"
             style={{ animationDelay: "240ms" }}
+          >
+            <a
+              href="#upload"
+              className="inline-flex h-11 items-center rounded-full bg-accent px-6 text-sm font-medium text-background shadow-[0_0_40px_-10px] shadow-accent transition-transform hover:-translate-y-0.5 active:scale-[0.98]"
+            >
+              Upload a file
+            </a>
+            <Link
+              href="/browse"
+              className="inline-flex h-11 items-center rounded-full border border-white/12 px-6 text-sm transition-all hover:border-accent/50 hover:bg-accent/10 active:scale-[0.98]"
+            >
+              Explore files →
+            </Link>
+          </div>
+
+          <div
+            id="upload"
+            className="fade-up mt-12 scroll-mt-28"
+            style={{ animationDelay: "320ms" }}
           >
             <Uploader />
           </div>
         </div>
       </section>
 
-      {/* How it works */}
-      <section id="how" className="mx-auto w-full max-w-5xl scroll-mt-24 px-6 py-24">
+      {/* Latest public shares */}
+      <section id="latest" className="mx-auto w-full max-w-5xl scroll-mt-28 px-6 py-16">
         <Reveal>
-          <div className="flex items-baseline justify-between gap-4 border-b border-white/8 pb-6">
-            <h2 className="text-2xl font-semibold tracking-tight sm:text-3xl">
-              How it works
-            </h2>
-            <span className="text-sm text-muted">Three steps</span>
-          </div>
+          <SectionHead
+            title="Latest shares"
+            hint="Fresh from the community"
+            action={
+              <Link
+                href="/browse"
+                className="text-sm text-muted transition-colors hover:text-accent"
+              >
+                View all →
+              </Link>
+            }
+          />
         </Reveal>
 
-        <div className="mt-10 grid gap-6 sm:grid-cols-3">
+        {latest.items.length > 0 ? (
+          <div className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+            {latest.items.map((card, index) => (
+              <Reveal key={card.id} delay={(index % 4) * 70}>
+                <ShareCard card={card} />
+              </Reveal>
+            ))}
+          </div>
+        ) : (
+          <Reveal delay={80}>
+            <div className="mt-8 rounded-2xl border border-dashed border-white/12 bg-white/[0.02] px-6 py-12 text-center">
+              <p className="text-sm font-medium">No shares published yet</p>
+              <p className="mt-2 text-sm text-muted">
+                Upload the first file — it will appear right here.
+              </p>
+              <a
+                href="#upload"
+                className="mt-5 inline-flex h-10 items-center rounded-full bg-accent px-6 text-sm font-medium text-background transition-transform hover:-translate-y-0.5"
+              >
+                Upload a file
+              </a>
+            </div>
+          </Reveal>
+        )}
+      </section>
+
+      {/* Browse by category */}
+      <section
+        id="categories"
+        className="mx-auto w-full max-w-5xl scroll-mt-28 px-6 py-16"
+      >
+        <Reveal>
+          <SectionHead
+            title="Browse by category"
+            hint="Categories are automatic"
+          />
+        </Reveal>
+
+        <div className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+          {FILE_CATEGORIES.map((category: FileCategory, index) => {
+            const meta = CATEGORY_META[category];
+            return (
+              <Reveal key={category} delay={index * 60}>
+                <Link
+                  href={`/browse?cat=${category}`}
+                  className="group flex h-full flex-col rounded-2xl border border-white/8 bg-white/[0.03] p-6 transition-all duration-300 hover:-translate-y-1 hover:border-accent/40 hover:shadow-[0_20px_60px_-30px] hover:shadow-accent/50"
+                >
+                  <div className="flex items-center justify-between gap-2.5">
+                    <div className="flex items-center gap-2.5">
+                      <span
+                        className={`h-2.5 w-2.5 rounded-full ${meta.dot}`}
+                        aria-hidden
+                      />
+                      <h3 className="text-base font-semibold tracking-tight">
+                        {meta.label}
+                      </h3>
+                    </div>
+                    <span
+                      className="translate-x-1 text-accent opacity-0 transition-all duration-300 group-hover:translate-x-0 group-hover:opacity-100"
+                      aria-hidden
+                    >
+                      →
+                    </span>
+                  </div>
+                  <p className="mt-3 text-sm leading-6 text-muted">
+                    {meta.blurb}
+                  </p>
+                  <p className="mt-4 break-words font-mono text-xs text-muted/80">
+                    {meta.examples}
+                  </p>
+                </Link>
+              </Reveal>
+            );
+          })}
+        </div>
+
+        <Reveal delay={120}>
+          <p className="mt-8 text-sm text-muted">
+            Every file is tagged from its extension and shown as a badge on the
+            share page — shares with mixed types also get a filter bar.{" "}
+            <Link
+              href="/about#categories"
+              className="text-foreground underline underline-offset-4 transition-colors hover:text-accent"
+            >
+              How categories work →
+            </Link>
+          </p>
+        </Reveal>
+      </section>
+
+      {/* How it works */}
+      <section id="how" className="mx-auto w-full max-w-5xl scroll-mt-28 px-6 py-16">
+        <Reveal>
+          <SectionHead title="How it works" hint="Three steps" />
+        </Reveal>
+
+        <div className="mt-8 grid gap-6 sm:grid-cols-3">
           {steps.map((step, index) => (
             <Reveal key={step.index} delay={index * 90}>
               <article className="group h-full rounded-2xl border border-white/8 bg-white/[0.03] p-6 transition-all duration-300 hover:-translate-y-1 hover:border-accent/40 hover:shadow-[0_20px_60px_-30px] hover:shadow-accent/50">
@@ -100,63 +254,6 @@ export default function Home() {
             </Reveal>
           ))}
         </div>
-      </section>
-
-      {/* File categories */}
-      <section
-        id="categories"
-        className="mx-auto w-full max-w-5xl scroll-mt-24 px-6 py-24"
-      >
-        <Reveal>
-          <div className="flex items-baseline justify-between gap-4 border-b border-white/8 pb-6">
-            <h2 className="text-2xl font-semibold tracking-tight sm:text-3xl">
-              What can you share?
-            </h2>
-            <span className="text-sm text-muted">
-              Categories are automatic
-            </span>
-          </div>
-        </Reveal>
-
-        <div className="mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-          {FILE_CATEGORIES.map((category, index) => {
-            const meta = CATEGORY_META[category];
-            return (
-              <Reveal key={category} delay={index * 60}>
-                <article className="group h-full rounded-2xl border border-white/8 bg-white/[0.03] p-6 transition-all duration-300 hover:-translate-y-1 hover:border-accent/40 hover:shadow-[0_20px_60px_-30px] hover:shadow-accent/50">
-                  <div className="flex items-center gap-2.5">
-                    <span
-                      className={`h-2.5 w-2.5 rounded-full ${meta.dot}`}
-                      aria-hidden
-                    />
-                    <h3 className="text-base font-semibold tracking-tight">
-                      {meta.label}
-                    </h3>
-                  </div>
-                  <p className="mt-3 text-sm leading-6 text-muted">
-                    {meta.blurb}
-                  </p>
-                  <p className="mt-4 break-words font-mono text-xs text-muted/80">
-                    {meta.examples}
-                  </p>
-                </article>
-              </Reveal>
-            );
-          })}
-        </div>
-
-        <Reveal delay={120}>
-          <p className="mt-8 text-sm text-muted">
-            Every file is tagged from its extension and shown as a badge on the
-            share page — shares with mixed types also get a filter bar.{" "}
-            <a
-              href="/about#categories"
-              className="text-foreground underline underline-offset-4 transition-colors hover:text-accent"
-            >
-              How categories work →
-            </a>
-          </p>
-        </Reveal>
       </section>
 
       {/* Footer */}

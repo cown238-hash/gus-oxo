@@ -46,6 +46,30 @@ const ICONS: Record<FileCategory, ReactNode> = {
   ),
 };
 
+/** Stroke glyph for a category — shared by row covers and Explore cards. */
+export function CategoryGlyph({
+  category,
+  className = "h-6 w-6",
+}: {
+  category: FileCategory;
+  className?: string;
+}) {
+  return (
+    <svg
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="1.5"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      className={className}
+      aria-hidden
+    >
+      {ICONS[category]}
+    </svg>
+  );
+}
+
 /** Category-tinted tile with a glyph — the cover for everything that isn't
  *  a previewable image. Tint classes come from CATEGORY_META so the JIT
  *  sees them at build time. */
@@ -56,17 +80,7 @@ function IconCover({ file }: { file: SharedFile }) {
       className={`flex h-14 w-14 shrink-0 items-center justify-center rounded-xl border ${CATEGORY_META[category].pill}`}
       aria-hidden
     >
-      <svg
-        viewBox="0 0 24 24"
-        fill="none"
-        stroke="currentColor"
-        strokeWidth="1.5"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-        className="h-6 w-6"
-      >
-        {ICONS[category]}
-      </svg>
+      <CategoryGlyph category={category} />
     </span>
   );
 }

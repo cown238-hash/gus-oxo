@@ -2,6 +2,7 @@ export const MAX_FILE_SIZE = 100 * 1024 * 1024; // 100 MB
 export const MAX_FILES = 50;
 export const MAX_LINKS = 50;
 export const MAX_NAME_LENGTH = 255;
+export const MAX_TITLE_LENGTH = 120;
 
 /** Share ids are generated with this alphabet, and validated with it on read. */
 export const SHARE_ID_PATTERN = /^[a-z0-9]{6,20}$/;
@@ -16,6 +17,11 @@ export type SharedFile = {
 export type Share = {
   id: string;
   createdAt: string;
+  /** Optional display title shown as the card headline on the Explore page. */
+  title?: string;
+  /** Whether the share shows up in the public Explore listing.
+   *  Omitted on older indexes — readers treat that as `true`. */
+  listed?: boolean;
   files: SharedFile[];
   links: string[];
 };
@@ -207,6 +213,10 @@ export function isShare(value: unknown): value is Share {
     typeof share.id === "string" &&
     SHARE_ID_PATTERN.test(share.id) &&
     typeof share.createdAt === "string" &&
+    (share.title === undefined ||
+      (typeof share.title === "string" &&
+        share.title.length <= MAX_TITLE_LENGTH)) &&
+    (share.listed === undefined || typeof share.listed === "boolean") &&
     Array.isArray(share.files) &&
     share.files.length <= MAX_FILES &&
     share.files.every(isSharedFile) &&

@@ -16,8 +16,8 @@ export default function Logo({
             y2="32"
             gradientUnits="userSpaceOnUse"
           >
-            <stop stopColor="#7c8cff" />
-            <stop offset="1" stopColor="#b07cff" />
+            <stop stopColor="#f5a524" />
+            <stop offset="1" stopColor="#ff7a45" />
           </linearGradient>
         </defs>
         <rect width="32" height="32" rx="9" fill="url(#gso-mark)" />

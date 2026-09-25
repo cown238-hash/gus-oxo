@@ -85,9 +85,17 @@ export default async function SharePage(props: PageProps<"/s/[id]">) {
       </div>
 
       <main className="fade-up relative z-10 mx-auto w-full max-w-3xl px-6 py-16">
-        <p className="text-xs uppercase tracking-[0.2em] text-muted">
-          Shared link
-        </p>
+        <div className="flex items-center justify-between gap-4">
+          <p className="text-xs uppercase tracking-[0.2em] text-muted">
+            Shared link
+          </p>
+          <Link
+            href="/browse"
+            className="text-xs text-muted transition-colors hover:text-accent"
+          >
+            ← Explore more files
+          </Link>
+        </div>
         <h1 className="mt-3 text-3xl font-semibold tracking-tight sm:text-4xl">
           {itemCount} item{itemCount === 1 ? "" : "s"}
           {createdAt && (

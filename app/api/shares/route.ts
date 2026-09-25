@@ -4,6 +4,7 @@ import {
   MAX_FILES,
   MAX_LINKS,
   MAX_NAME_LENGTH,
+  MAX_TITLE_LENGTH,
   SHARE_ID_PATTERN,
   isSharedFile,
   normalizeUrl,
@@ -45,6 +46,8 @@ export async function POST(request: Request) {
   const body = (await request.json().catch(() => null)) as {
     files?: unknown;
     links?: unknown;
+    title?: unknown;
+    listed?: unknown;
   } | null;
   if (!body) return badRequest("Invalid request body.");
 
@@ -74,9 +77,28 @@ export async function POST(request: Request) {
   }
 
   const id = createShareId();
+
+  // Optional portal metadata: a display title and whether the share is
+  // discoverable on the public Explore page (default: listed).
+  const titleValue = body.title;
+  let title: string | undefined;
+  if (titleValue !== undefined && titleValue !== null && titleValue !== "") {
+    if (typeof titleValue !== "string") {
+      return badRequest("`title` must be a string.");
+    }
+    const trimmed = titleValue.replace(/\s+/g, " ").trim().slice(0, MAX_TITLE_LENGTH);
+    if (trimmed) title = trimmed;
+  }
+  if (body.listed !== undefined && typeof body.listed !== "boolean") {
+    return badRequest("`listed` must be a boolean.");
+  }
+  const listed = body.listed ?? true;
+
   const share: Share = {
     id,
     createdAt: new Date().toISOString(),
+    ...(title ? { title } : {}),
+    listed,
     files: rawFiles,
     links,
   };

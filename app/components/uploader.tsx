@@ -1,6 +1,7 @@
 "use client";
 
 import { upload } from "@vercel/blob/client";
+import Link from "next/link";
 import { useRef, useState } from "react";
 import CategoryBadge from "./category-badge";
 import { useToast } from "./toast";
@@ -25,6 +26,8 @@ export default function Uploader() {
   const [files, setFiles] = useState<File[]>([]);
   const [links, setLinks] = useState<string[]>([]);
   const [linkInput, setLinkInput] = useState("");
+  const [title, setTitle] = useState("");
+  const [listed, setListed] = useState(true);
   const [dragging, setDragging] = useState(false);
   const [state, setState] = useState<UploaderState>({ status: "idle" });
   const [copied, setCopied] = useState(false);
@@ -94,6 +97,8 @@ export default function Uploader() {
     setFiles([]);
     setLinks([]);
     setLinkInput("");
+    setTitle("");
+    setListed(true);
     setState({ status: "idle" });
     setCopied(false);
   };
@@ -162,7 +167,12 @@ export default function Uploader() {
       const res = await fetch("/api/shares", {
         method: "POST",
         headers: { "content-type": "application/json" },
-        body: JSON.stringify({ files: uploaded, links }),
+        body: JSON.stringify({
+          files: uploaded,
+          links,
+          title: title.trim() || undefined,
+          listed,
+        }),
       });
       const data: { path?: string; error?: string } = await res
         .json()
@@ -242,6 +252,22 @@ export default function Uploader() {
           This link never expires — the files stay online until an admin
           deletes the share, and anyone with the link can download them any
           time.
+        </p>
+        <p className="mt-2 text-xs text-muted">
+          {listed ? (
+            <>
+              🌍 Listed on the{" "}
+              <Link
+                href="/browse"
+                className="text-foreground underline underline-offset-4 transition-colors hover:text-accent"
+              >
+                Explore page
+              </Link>{" "}
+              — anyone can discover it there too.
+            </>
+          ) : (
+            <>🔒 Link-only share — it won&apos;t appear on the Explore page.</>
+          )}
         </p>
       </div>
     );
@@ -343,6 +369,37 @@ export default function Uploader() {
           Add
         </button>
       </div>
+
+      {/* Optional title + Explore listing */}
+      <div className="mt-5 flex flex-col gap-3 sm:flex-row">
+        <input
+          type="text"
+          maxLength={120}
+          value={title}
+          placeholder="Title for the Explore page (optional)"
+          onChange={(event) => {
+            setTitle(event.target.value);
+            if (state.status === "error") setState({ status: "idle" });
+          }}
+          className="h-11 flex-1 rounded-full border border-white/12 bg-black/40 px-5 text-sm outline-none transition-colors placeholder:text-muted focus:border-accent/50"
+        />
+      </div>
+
+      <label className="mt-4 flex cursor-pointer select-none items-start gap-3 text-sm">
+        <input
+          type="checkbox"
+          checked={listed}
+          onChange={(event) => setListed(event.target.checked)}
+          className="mt-0.5 h-4 w-4 shrink-0 accent-accent"
+        />
+        <span>
+          <span className="font-medium">List on the Explore page</span>
+          <span className="block text-xs leading-5 text-muted">
+            Anyone can browse, search and download it. Uncheck for a
+            link-only share.
+          </span>
+        </span>
+      </label>
 
       {/* Selected items */}
       {(files.length > 0 || links.length > 0) && (
