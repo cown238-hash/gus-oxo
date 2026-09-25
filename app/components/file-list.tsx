@@ -2,6 +2,7 @@
 
 import { useMemo, useState } from "react";
 import CategoryBadge from "./category-badge";
+import { FileCover, FileMedia } from "./file-preview";
 import {
   CATEGORY_META,
   FILE_CATEGORIES,
@@ -19,7 +20,8 @@ const chipClass = (selected: boolean) =>
   }`;
 
 /** File list with a category filter. Categories come from the file
- *  extension — see fileCategory() in the share lib. */
+ *  extension — see fileCategory() in the share lib. Rows show a small
+ *  cover, and audio/video get an inline player. */
 export default function FileList({ files }: { files: SharedFile[] }) {
   const [selected, setSelected] = useState<FileCategory | "all">("all");
 
@@ -80,30 +82,36 @@ export default function FileList({ files }: { files: SharedFile[] }) {
         {visible.map((file) => (
           <li
             key={file.url}
-            className="flex items-center justify-between gap-4 rounded-2xl border border-white/8 bg-white/[0.03] px-5 py-4 transition-colors hover:border-accent/40"
+            className="rounded-2xl border border-white/8 bg-white/[0.03] px-5 py-4 transition-colors hover:border-accent/40"
           >
-            <div className="flex min-w-0 flex-col gap-1">
-              <a
-                href={file.url}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="truncate text-sm font-medium hover:text-accent"
-              >
-                {file.name}
-              </a>
-              <div className="flex items-center gap-2">
-                <CategoryBadge category={fileCategory(file.name)} />
-                <span className="font-mono text-xs text-muted">
-                  {formatBytes(file.size)}
-                </span>
+            <div className="flex items-start gap-4">
+              <FileCover file={file} />
+
+              <div className="min-w-0 flex-1">
+                <a
+                  href={file.url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="block truncate text-sm font-medium hover:text-accent"
+                >
+                  {file.name}
+                </a>
+                <div className="mt-1.5 flex items-center gap-2">
+                  <CategoryBadge category={fileCategory(file.name)} />
+                  <span className="font-mono text-xs text-muted">
+                    {formatBytes(file.size)}
+                  </span>
+                </div>
+                <FileMedia file={file} />
               </div>
+
+              <a
+                href={file.downloadUrl}
+                className="shrink-0 self-center rounded-full border border-white/12 px-4 py-1.5 text-sm transition-all hover:border-accent/50 hover:bg-white/5 active:scale-95"
+              >
+                Download
+              </a>
             </div>
-            <a
-              href={file.downloadUrl}
-              className="shrink-0 rounded-full border border-white/12 px-4 py-1.5 text-sm transition-all hover:border-accent/50 hover:bg-white/5 active:scale-95"
-            >
-              Download
-            </a>
           </li>
         ))}
       </ul>
