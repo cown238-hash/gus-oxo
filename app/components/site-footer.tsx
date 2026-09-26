@@ -106,6 +106,31 @@ export default function SiteFooter({
         </div>
       </div>
 
+      {/* Contact */}
+      <div className="border-t border-white/5">
+        <div
+          className={`mx-auto flex w-full ${container} flex-wrap items-center gap-x-6 gap-y-3 px-6 py-5 text-sm`}
+        >
+          <h2 className={columnTitle}>Contact</h2>
+          <a
+            href="mailto:cown238@gmail.com"
+            className="inline-flex items-center gap-2 text-muted transition-colors hover:text-foreground"
+          >
+            <span className="h-1.5 w-1.5 rounded-full bg-accent" aria-hidden />
+            cown238@gmail.com
+          </a>
+          <a
+            href="https://www.youtube.com/@Wongsakone"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex items-center gap-2 text-muted transition-colors hover:text-foreground"
+          >
+            <span className="h-1.5 w-1.5 rounded-full bg-accent-2" aria-hidden />
+            youtube.com/@Wongsakone
+          </a>
+        </div>
+      </div>
+
       {/* Bottom bar */}
       <div className="border-t border-white/5">
         <div

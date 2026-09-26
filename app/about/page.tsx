@@ -8,7 +8,7 @@ import { CATEGORY_META, FILE_CATEGORIES } from "@/app/lib/share";
 export const metadata: Metadata = {
   title: "About",
   description:
-    "What GSO is, how sharing works, what file categories exist, and where the honest gaps are.",
+    "What GSO is, how sharing works, what file categories exist, where the honest gaps are, and how to get in touch.",
 };
 
 const highlights = [
@@ -175,6 +175,65 @@ export default function AboutPage() {
               same store.
             </p>
           </Reveal>
+        </section>
+
+        {/* Contact */}
+        <section id="contact" className="mt-16 scroll-mt-24">
+          <Reveal>
+            <div className="flex items-baseline justify-between gap-4 border-b border-white/8 pb-6">
+              <h2 className="text-2xl font-semibold tracking-tight">
+                Contact
+              </h2>
+              <span className="text-sm text-muted">Say hello</span>
+            </div>
+            <p className="mt-6 text-base leading-7 text-muted">
+              Questions, feedback, or something you&apos;d like shared? Pick
+              whichever is easier — no forms, no tickets:
+            </p>
+          </Reveal>
+          <div className="mt-8 grid gap-4 sm:grid-cols-2">
+            <Reveal delay={80}>
+              <a
+                href="mailto:cown238@gmail.com"
+                className="group flex h-full flex-col rounded-2xl border border-white/8 bg-white/[0.03] p-6 transition-all duration-300 hover:-translate-y-1 hover:border-accent/40 hover:shadow-[0_20px_60px_-30px] hover:shadow-accent/50"
+              >
+                <span className="text-xs uppercase tracking-[0.18em] text-muted">
+                  Email
+                </span>
+                <span className="mt-3 break-all text-base font-semibold tracking-tight transition-colors group-hover:text-accent">
+                  cown238@gmail.com
+                </span>
+                <span className="mt-2 text-sm leading-6 text-muted">
+                  Best for anything that needs a reply — questions, feedback,
+                  requests.
+                </span>
+                <span className="mt-4 text-sm text-accent">
+                  Write an email →
+                </span>
+              </a>
+            </Reveal>
+            <Reveal delay={160}>
+              <a
+                href="https://www.youtube.com/@Wongsakone"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="group flex h-full flex-col rounded-2xl border border-white/8 bg-white/[0.03] p-6 transition-all duration-300 hover:-translate-y-1 hover:border-accent/40 hover:shadow-[0_20px_60px_-30px] hover:shadow-accent/50"
+              >
+                <span className="text-xs uppercase tracking-[0.18em] text-muted">
+                  YouTube
+                </span>
+                <span className="mt-3 break-all text-base font-semibold tracking-tight transition-colors group-hover:text-accent">
+                  @Wongsakone
+                </span>
+                <span className="mt-2 text-sm leading-6 text-muted">
+                  Videos and updates from the channel.
+                </span>
+                <span className="mt-4 text-sm text-accent">
+                  Visit the channel →
+                </span>
+              </a>
+            </Reveal>
+          </div>
         </section>
 
         {/* CTA */}
