@@ -1,0 +1,6 @@
+# Files the Vercel CLI must never upload with a deploy.
+# Environment variables come from the project settings instead (vercel env add),
+# and this file keeps the local secrets out of the deployment bundle.
+.env.local
+.env*.local
+.vercel

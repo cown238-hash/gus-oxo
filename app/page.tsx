@@ -57,6 +57,14 @@ function SectionHead({
   );
 }
 
+/**
+ * The homepage is prerendered, so without this the "Latest shares" grid
+ * would stay frozen at whatever was uploaded when the site was built.
+ * Revalidate at most once a minute — the /browse page itself is always
+ * rendered fresh on each request.
+ */
+export const revalidate = 60;
+
 export default async function Home() {
   const latest = await listPublicShares({ pageSize: 8 });
 
