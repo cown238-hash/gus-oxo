@@ -12,18 +12,13 @@ export const metadata: Metadata = {
 const contactMethods = [
   {
     label: "Email",
-    value: "support@gso.app",
-    href: "mailto:support@gso.app",
+    value: "cown238@gmail.com",
+    href: "mailto:cown238@gmail.com",
   },
   {
-    label: "Support",
-    value: "help@gso.app",
-    href: "mailto:help@gso.app",
-  },
-  {
-    label: "Business",
-    value: "hello@gso.app",
-    href: "mailto:hello@gso.app",
+    label: "Phone",
+    value: "020-552-39450",
+    href: "tel:02055239450",
   },
 ];
 
@@ -65,11 +60,9 @@ export default function ContactPage() {
 
         <Reveal delay={200}>
           <div className="mt-8 rounded-2xl border border-white/8 bg-white/[0.03] p-6">
-            <h2 className="text-base font-medium">Office</h2>
+            <h2 className="text-base font-medium">Line</h2>
             <p className="mt-2 text-sm text-muted">
-              123 Sukhumvit Road, Klongtoey
-              <br />
-              Bangkok 10110, Thailand
+              @gso
             </p>
           </div>
         </Reveal>
@@ -79,7 +72,7 @@ export default function ContactPage() {
             <h2 className="text-base font-medium">Response time</h2>
             <p className="mt-2 text-sm text-muted">
               We typically reply within 1-2 business days. For urgent matters,
-              please email support@gso.app with &quot;URGENT&quot; in the
+              please email cown238@gmail.com with &quot;URGENT&quot; in the
               subject line.
             </p>
           </div>

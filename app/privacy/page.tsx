@@ -54,7 +54,7 @@ const sections = [
   {
     title: "6. Contact",
     content: [
-      "For privacy-related inquiries, email privacy@gso.app.",
+      "For privacy-related inquiries, email cown238@gmail.com.",
       "We will respond to all requests within 30 days.",
     ],
   },
