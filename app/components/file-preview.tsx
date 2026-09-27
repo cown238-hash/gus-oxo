@@ -105,6 +105,36 @@ export function FileCover({ file }: { file: SharedFile }) {
   );
 }
 
+/** Large cover image for card layout: the real thumbnail for image files
+ *  (falling back to the icon tile when the browser can't decode it). */
+export function FileCoverLarge({ file }: { file: SharedFile }) {
+  const [failed, setFailed] = useState(false);
+  const isImage = fileCategory(file.name) === "image";
+
+  if (!isImage || failed) {
+    const category = fileCategory(file.name);
+    return (
+      <span
+        className={`flex h-full w-full items-center justify-center ${CATEGORY_META[category].pill}`}
+        aria-hidden
+      >
+        <CategoryGlyph category={category} className="h-16 w-16" />
+      </span>
+    );
+  }
+
+  return (
+    <Image
+      src={file.url}
+      alt=""
+      fill
+      onError={() => setFailed(true)}
+      className="h-full w-full object-cover"
+      sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+    />
+  );
+}
+
 /** Inline player for playable categories. `preload="none"` keeps page loads
  *  light — nothing downloads until the visitor presses play. */
 export function FileMedia({ file }: { file: SharedFile }) {

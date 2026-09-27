@@ -2,6 +2,9 @@ import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import ToastProvider from "./components/toast";
+import GoogleAnalytics from "./components/google-analytics";
+import GoogleAdSense from "./components/google-adsense";
+import CookieConsent from "./components/cookie-consent";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -27,6 +30,9 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
     >
       <body className="min-h-full flex flex-col">
         <ToastProvider>{children}</ToastProvider>
+        <GoogleAnalytics />
+        <GoogleAdSense />
+        <CookieConsent />
       </body>
     </html>
   );

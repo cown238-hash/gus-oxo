@@ -4,6 +4,7 @@ import Reveal from "@/app/components/reveal";
 import ShareCard from "@/app/components/share-card";
 import SiteFooter from "@/app/components/site-footer";
 import SiteHeader from "@/app/components/site-header";
+import { TrackFilter, TrackSearch } from "@/app/components/browse-tracking";
 import { listPublicShares } from "@/app/lib/browse";
 import {
   CATEGORY_META,
@@ -64,6 +65,8 @@ export default async function BrowsePage(props: PageProps<"/browse">) {
 
   return (
     <div className="relative flex min-h-full flex-col">
+      <TrackSearch query={q} />
+      <TrackFilter category={cat} />
       <SiteHeader activeNav="explore" activeCat={cat} />
 
       <main className="mx-auto w-full max-w-5xl flex-1 px-6 py-12">

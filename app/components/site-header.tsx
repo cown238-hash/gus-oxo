@@ -6,7 +6,7 @@ import {
   type FileCategory,
 } from "@/app/lib/share";
 
-type NavKey = "home" | "explore" | null;
+type NavKey = "home" | "explore" | "about" | "contact" | "privacy" | null;
 
 function navPill(active: boolean) {
   return `shrink-0 rounded-full px-3 py-1.5 text-sm transition-all active:scale-[0.97] ${
@@ -81,8 +81,14 @@ export default function SiteHeader({
           <Link href="/browse" className={navPill(activeNav === "explore")}>
             Explore
           </Link>
-          <Link href="/about" className={`${navPill(false)} hidden sm:block`}>
+          <Link href="/about" className={`${navPill(activeNav === "about")} hidden sm:block`}>
             About
+          </Link>
+          <Link href="/contact" className={`${navPill(activeNav === "contact")} hidden sm:block`}>
+            Contact
+          </Link>
+          <Link href="/privacy" className={`${navPill(activeNav === "privacy")} hidden lg:block`}>
+            Privacy
           </Link>
           <Link
             href="/#upload"
