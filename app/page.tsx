@@ -264,6 +264,52 @@ export default async function Home() {
         </div>
       </section>
 
+      {/* FAQ */}
+      <section id="faq" className="mx-auto w-full max-w-5xl scroll-mt-28 px-6 py-16">
+        <Reveal>
+          <SectionHead title="Frequently asked questions" />
+        </Reveal>
+
+        <div className="mt-8 space-y-4">
+          {[
+            {
+              q: "Is GSO free to use?",
+              a: "Yes, GSO is completely free. You can upload up to 50 files at once, each up to 100 MB, and share them with anyone — no account required.",
+            },
+            {
+              q: "How long do files stay online?",
+              a: "Files stay online indefinitely until you delete them or an admin removes them. There is no expiration date on share links.",
+            },
+            {
+              q: "Can I share private files?",
+              a: "Yes. When uploading, uncheck 'List on the Explore page' to create a link-only share. Only people with the link can access it.",
+            },
+            {
+              q: "What file types are supported?",
+              a: "All file types are supported — images, videos, audio, documents, archives, and more. Files are automatically categorized by their extension.",
+            },
+            {
+              q: "Is there a file size limit?",
+              a: "Each file can be up to 100 MB. You can upload up to 50 files in a single share.",
+            },
+          ].map((faq, index) => (
+            <Reveal key={faq.q} delay={index * 60}>
+              <details className="group rounded-2xl border border-white/8 bg-white/[0.03] px-6 py-4 transition-colors open:border-accent/30">
+                <summary className="flex cursor-pointer list-none items-center justify-between gap-4 text-sm font-medium [&::-webkit-details-marker]:hidden">
+                  {faq.q}
+                  <span className="shrink-0 text-accent transition-transform duration-300 group-open:rotate-45">
+                    +
+                  </span>
+                </summary>
+                <p className="mt-3 text-sm leading-6 text-muted">
+                  {faq.a}
+                </p>
+              </details>
+            </Reveal>
+          ))}
+        </div>
+      </section>
+
       {/* Footer */}
       <SiteFooter />
     </div>
