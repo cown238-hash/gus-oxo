@@ -20,6 +20,9 @@ export const metadata: Metadata = {
   title: "GSO — Upload & share files and links",
   description:
     "Drop a file or paste a link, get one shareable URL in seconds — or browse what others shared on the Explore page. Fast, no account required.",
+  verification: {
+    google: "e2zEu_Xq4SgJHnQdrK-ku_i_fqF-0YJfv3nInB2IZtM",
+  },
 };
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
