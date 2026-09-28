@@ -141,7 +141,7 @@ export default function Uploader() {
         // Files go straight from the browser to Blob storage — the server only
         // ever issues a short-lived token, so we avoid its request size limit.
         const blob = await upload(
-          `files/${folder}/${i}_${safeFileName(file.name)}`,
+          `files/${folder}/${safeFileName(file.name)}`,
           file,
           {
             access: "public",
