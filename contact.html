@@ -1,0 +1,881 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact | MOTSTUDIOS</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-primary: #0a0a0f;
+            --bg-secondary: #12121a;
+            --bg-card: #1a1a25;
+            --text-primary: #ffffff;
+            --text-secondary: #a0a0b0;
+            --accent-primary: #DC2626;
+            --accent-secondary: #991B1B;
+            --accent-gradient: linear-gradient(135deg, #DC2626, #7F1D1D);
+            --border-color: rgba(255, 255, 255, 0.08);
+            --transition: all 0.3s ease;
+            --shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+        }
+
+        *, *::before, *::after {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+            font-size: 16px;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background-color: var(--bg-primary);
+            color: var(--text-primary);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+
+        ul {
+            list-style: none;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 24px;
+        }
+
+        h1, h2, h3, h4 {
+            font-family: 'Space Grotesk', sans-serif;
+            font-weight: 700;
+            line-height: 1.2;
+        }
+
+        .accent {
+            background: var(--accent-gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .navbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            padding: 20px 0;
+            transition: var(--transition);
+        }
+
+        .navbar.scrolled {
+            background: rgba(10, 10, 15, 0.95);
+            backdrop-filter: blur(20px);
+            padding: 15px 0;
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.3);
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 24px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .logo {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 1.5rem;
+            font-weight: 800;
+            letter-spacing: 2px;
+        }
+
+        .logo-accent {
+            background: var(--accent-gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 35px;
+        }
+
+        .nav-links a {
+            font-size: 0.95rem;
+            font-weight: 500;
+            color: var(--text-secondary);
+            transition: var(--transition);
+            position: relative;
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--accent-gradient);
+            transition: var(--transition);
+        }
+
+        .nav-links a:hover,
+        .nav-links a.active {
+            color: var(--text-primary);
+        }
+
+        .nav-links a:hover::after,
+        .nav-links a.active::after {
+            width: 100%;
+        }
+
+        .menu-toggle {
+            display: none;
+            flex-direction: column;
+            gap: 5px;
+            background: none;
+            border: none;
+            cursor: pointer;
+            padding: 5px;
+        }
+
+        .menu-toggle span {
+            width: 25px;
+            height: 2px;
+            background: var(--text-primary);
+            transition: var(--transition);
+        }
+
+        .page-hero {
+            padding: 180px 24px 100px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .page-hero::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: 
+                radial-gradient(ellipse at 20% 50%, rgba(220, 38, 38, 0.1) 0%, transparent 50%),
+                radial-gradient(ellipse at 80% 20%, rgba(153, 27, 27, 0.08) 0%, transparent 50%);
+            z-index: 0;
+        }
+
+        .page-hero-content {
+            position: relative;
+            z-index: 1;
+        }
+
+        .page-tag {
+            display: inline-block;
+            padding: 8px 20px;
+            background: rgba(220, 38, 38, 0.1);
+            border: 1px solid rgba(220, 38, 38, 0.3);
+            border-radius: 50px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: #DC2626;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: 20px;
+        }
+
+        .page-title {
+            font-size: clamp(2.5rem, 6vw, 4rem);
+            margin-bottom: 16px;
+        }
+
+        .page-description {
+            font-size: 1.2rem;
+            color: var(--text-secondary);
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        section {
+            padding: 80px 0;
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 60px;
+        }
+
+        .section-tag {
+            display: inline-block;
+            padding: 8px 20px;
+            background: rgba(220, 38, 38, 0.1);
+            border: 1px solid rgba(220, 38, 38, 0.3);
+            border-radius: 50px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: #DC2626;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: 20px;
+        }
+
+        .section-title {
+            font-size: clamp(2rem, 5vw, 3rem);
+            margin-bottom: 16px;
+        }
+
+        .section-description {
+            font-size: 1.1rem;
+            color: var(--text-secondary);
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .contact-grid {
+            display: grid;
+            grid-template-columns: 1fr 1.5fr;
+            gap: 60px;
+        }
+
+        .contact-info {
+            display: flex;
+            flex-direction: column;
+            gap: 30px;
+        }
+
+        .contact-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 16px;
+        }
+
+        .contact-icon {
+            width: 50px;
+            height: 50px;
+            border-radius: 12px;
+            background: rgba(220, 38, 38, 0.1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #DC2626;
+            flex-shrink: 0;
+        }
+
+        .contact-details h4 {
+            font-size: 1rem;
+            margin-bottom: 4px;
+        }
+
+        .contact-details p {
+            color: var(--text-secondary);
+        }
+
+        .social-links {
+            display: flex;
+            gap: 12px;
+            margin-top: 10px;
+        }
+
+        .social-link {
+            width: 45px;
+            height: 45px;
+            border-radius: 12px;
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--text-secondary);
+            transition: var(--transition);
+        }
+
+        .social-link:hover {
+            background: var(--accent-gradient);
+            color: white;
+            border-color: transparent;
+            transform: translateY(-3px);
+        }
+
+        .contact-form {
+            background: var(--bg-card);
+            border-radius: 24px;
+            padding: 40px;
+            border: 1px solid var(--border-color);
+        }
+
+        .form-group {
+            margin-bottom: 24px;
+        }
+
+        .form-group label {
+            display: block;
+            font-weight: 600;
+            margin-bottom: 8px;
+            font-size: 0.95rem;
+        }
+
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+            padding: 14px 18px;
+            background: var(--bg-secondary);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            color: var(--text-primary);
+            font-size: 1rem;
+            font-family: inherit;
+            transition: var(--transition);
+        }
+
+        .form-group input:focus,
+        .form-group select:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: #DC2626;
+            box-shadow: 0 0 0 3px rgba(220, 38, 38, 0.1);
+        }
+
+        .form-group input::placeholder,
+        .form-group textarea::placeholder {
+            color: var(--text-secondary);
+        }
+
+        .form-group textarea {
+            resize: vertical;
+            min-height: 120px;
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            padding: 14px 28px;
+            border-radius: 50px;
+            font-weight: 600;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: var(--transition);
+            border: none;
+            outline: none;
+            width: 100%;
+        }
+
+        .btn-primary {
+            background: var(--accent-gradient);
+            color: white;
+            box-shadow: 0 4px 20px rgba(220, 38, 38, 0.4);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 30px rgba(220, 38, 38, 0.5);
+        }
+
+        .faq-section {
+            background: var(--bg-secondary);
+        }
+
+        .faq-grid {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .faq-item {
+            background: var(--bg-card);
+            border-radius: 16px;
+            margin-bottom: 16px;
+            border: 1px solid var(--border-color);
+            overflow: hidden;
+        }
+
+        .faq-question {
+            padding: 20px 24px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            cursor: pointer;
+            font-weight: 600;
+            transition: var(--transition);
+        }
+
+        .faq-question:hover {
+            color: var(--accent-primary);
+        }
+
+        .faq-icon {
+            width: 24px;
+            height: 24px;
+            transition: var(--transition);
+        }
+
+        .faq-item.active .faq-icon {
+            transform: rotate(45deg);
+        }
+
+        .faq-answer {
+            padding: 0 24px;
+            max-height: 0;
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .faq-item.active .faq-answer {
+            padding: 0 24px 20px;
+            max-height: 200px;
+        }
+
+        .faq-answer p {
+            color: var(--text-secondary);
+            line-height: 1.7;
+        }
+
+        .footer {
+            background: var(--bg-secondary);
+            border-top: 1px solid var(--border-color);
+            padding: 60px 0 30px;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr;
+            gap: 60px;
+            margin-bottom: 40px;
+        }
+
+        .footer-brand p {
+            color: var(--text-secondary);
+            margin-top: 16px;
+            max-width: 300px;
+        }
+
+        .footer-links h4 {
+            font-size: 1rem;
+            margin-bottom: 20px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .footer-links ul {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .footer-links a {
+            color: var(--text-secondary);
+            transition: var(--transition);
+        }
+
+        .footer-links a:hover {
+            color: #DC2626;
+        }
+
+        .footer-bottom {
+            padding-top: 30px;
+            border-top: 1px solid var(--border-color);
+            text-align: center;
+        }
+
+        .footer-bottom p {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+        }
+
+        @media (max-width: 992px) {
+            .contact-grid {
+                grid-template-columns: 1fr;
+                gap: 40px;
+            }
+
+            .footer-content {
+                grid-template-columns: 1fr 1fr;
+                gap: 40px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .nav-links {
+                position: fixed;
+                top: 0;
+                right: -100%;
+                width: 70%;
+                height: 100vh;
+                background: var(--bg-secondary);
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
+                gap: 30px;
+                transition: var(--transition);
+                box-shadow: -10px 0 30px rgba(0, 0, 0, 0.3);
+            }
+
+            .nav-links.active {
+                right: 0;
+            }
+
+            .menu-toggle {
+                display: flex;
+                z-index: 1001;
+            }
+
+            .menu-toggle.active span:nth-child(1) {
+                transform: rotate(45deg) translate(5px, 5px);
+            }
+
+            .menu-toggle.active span:nth-child(2) {
+                opacity: 0;
+            }
+
+            .menu-toggle.active span:nth-child(3) {
+                transform: rotate(-45deg) translate(5px, -5px);
+            }
+
+            .footer-content {
+                grid-template-columns: 1fr;
+                text-align: center;
+            }
+
+            .footer-brand p {
+                margin: 16px auto 0;
+            }
+
+            .footer-links ul {
+                align-items: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="motstudios.html" class="logo">MOT<span class="logo-accent">STUDIOS</span></a>
+            <ul class="nav-links">
+                <li><a href="motstudios.html">Home</a></li>
+                <li><a href="about.html">About</a></li>
+                <li><a href="services.html">Services</a></li>
+                <li><a href="portfolio.html">Portfolio</a></li>
+                <li><a href="contact.html" class="active">Contact</a></li>
+            </ul>
+            <button class="menu-toggle" id="menuToggle">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+        </div>
+    </nav>
+
+    <!-- Page Hero -->
+    <section class="page-hero">
+        <div class="page-hero-content">
+            <span class="page-tag">Contact Us</span>
+            <h1 class="page-title">Let's Work <span class="accent">Together</span></h1>
+            <p class="page-description">Ready to start your next project? Send us a message and let's create something amazing.</p>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact">
+        <div class="container">
+            <div class="section-header">
+                <span class="section-tag">Get in Touch</span>
+                <h2 class="section-title">Contact <span class="accent">Us</span></h2>
+                <p class="section-description">We'd love to hear about your project. Reach out and let's make something great together.</p>
+            </div>
+            <div class="contact-grid">
+                <div class="contact-info">
+                    <div class="contact-item">
+                        <div class="contact-icon">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
+                                <polyline points="22,6 12,13 2,6"></polyline>
+                            </svg>
+                        </div>
+                        <div class="contact-details">
+                            <h4>Email</h4>
+                            <p>contact@motstudios.com</p>
+                        </div>
+                    </div>
+                    <div class="contact-item">
+                        <div class="contact-icon">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
+                                <circle cx="12" cy="10" r="3"></circle>
+                            </svg>
+                        </div>
+                        <div class="contact-details">
+                            <h4>Location</h4>
+                            <p>Los Angeles, CA</p>
+                        </div>
+                    </div>
+                    <div class="contact-item">
+                        <div class="contact-icon">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <circle cx="12" cy="12" r="10"></circle>
+                                <polyline points="12 6 12 12 16 14"></polyline>
+                            </svg>
+                        </div>
+                        <div class="contact-details">
+                            <h4>Response Time</h4>
+                            <p>Within 24 hours</p>
+                        </div>
+                    </div>
+                    <div class="social-links">
+                        <a href="#" class="social-link" aria-label="Instagram">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
+                                <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
+                                <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line>
+                            </svg>
+                        </a>
+                        <a href="#" class="social-link" aria-label="YouTube">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M22.54 6.42a2.78 2.78 0 0 0-1.94-2C18.88 4 12 4 12 4s-6.88 0-8.6.46a2.78 2.78 0 0 0-1.94 2A29 29 0 0 0 1 11.75 a29 29 0 0 0 .46 5.33A2.78 2.78 0 0 0 3.4 19c1.72.46 8.6.46 8.6.46s6.88 0 8.6-.46a2.78 2.78 0 0 0 1.94-2 29 29 0 0 0 .46-5.25 29 29 0 0 0-.46-5.33z"></path>
+                                <polygon points="9.75 15.02 15.5 11.75 9.75 8.48 9.75 15.02"></polygon>
+                            </svg>
+                        </a>
+                        <a href="#" class="social-link" aria-label="Spotify">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <circle cx="12" cy="12" r="10"></circle>
+                                <path d="M8 11.5c2.5-.8 5.5-.5 8 1"></path>
+                                <path d="M8.5 14.5c2-.6 4-.4 6 .8"></path>
+                                <path d="M9 8.5c3-1 6.5-.7 9 1.2"></path>
+                            </svg>
+                        </a>
+                        <a href="#" class="social-link" aria-label="TikTok">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M9 12a4 4 0 1 0 4 4V4a5 5 0 0 0 5 5"></path>
+                            </svg>
+                        </a>
+                    </div>
+                </div>
+                <form class="contact-form" id="contactForm">
+                    <div class="form-group">
+                        <label for="name">Your Name</label>
+                        <input type="text" id="name" name="name" placeholder="John Doe" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="email">Email Address</label>
+                        <input type="email" id="email" name="email" placeholder="john@example.com" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="service">Service Interested In</label>
+                        <select id="service" name="service" required>
+                            <option value="">Select a service</option>
+                            <option value="music">Music Production</option>
+                            <option value="mixing">Mixing & Mastering</option>
+                            <option value="visual">Visual Design</option>
+                            <option value="video">Video Production</option>
+                            <option value="other">Other</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="message">Your Message</label>
+                        <textarea id="message" name="message" rows="5" placeholder="Tell us about your project..." required></textarea>
+                    </div>
+                    <button type="submit" class="btn btn-primary">
+                        <span>Send Message</span>
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <line x1="22" y1="2" x2="11" y2="13"></line>
+                            <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
+                        </svg>
+                    </button>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ Section -->
+    <section id="faq" class="faq-section">
+        <div class="container">
+            <div class="section-header">
+                <span class="section-tag">FAQ</span>
+                <h2 class="section-title">Frequently Asked <span class="accent">Questions</span></h2>
+                <p class="section-description">Find answers to common questions about our services</p>
+            </div>
+            <div class="faq-grid">
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <span>How long does it take to complete a project?</span>
+                        <svg class="faq-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <line x1="12" y1="5" x2="12" y2="19"></line>
+                            <line x1="5" y1="12" x2="19" y2="12"></line>
+                        </svg>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Project timelines vary depending on complexity. A typical beat takes 3-5 days, while mixing & mastering takes 1-3 days. We'll provide a specific timeline during consultation.</p>
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <span>Do you offer revisions?</span>
+                        <svg class="faq-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <line x1="12" y1="5" x2="12" y2="19"></line>
+                            <line x1="5" y1="12" x2="19" y2="12"></line>
+                        </svg>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Yes! We offer 2 free revisions for all services. Additional revisions can be arranged for a small fee.</p>
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <span>What file formats do you deliver?</span>
+                        <svg class="faq-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <line x1="12" y1="5" x2="12" y2="19"></line>
+                            <line x1="5" y1="12" x2="19" y2="12"></line>
+                        </svg>
+                    </div>
+                    <div class="faq-answer">
+                        <p>We deliver high-quality WAV and MP3 files for audio, and MP4 for video projects. Stems are available upon request for mixing & mastering services.</p>
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <span>Can I get exclusive rights to a beat?</span>
+                        <svg class="faq-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <line x1="12" y1="5" x2="12" y2="19"></line>
+                            <line x1="5" y1="12" x2="19" y2="12"></line>
+                        </svg>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Yes! Exclusive rights are available for all beats. Contact us for pricing and details on exclusive licenses.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-brand">
+                    <a href="motstudios.html" class="logo">MOT<span class="logo-accent">STUDIOS</span></a>
+                    <p>Creative studio specializing in music production, visual design, and digital experiences.</p>
+                </div>
+                <div class="footer-links">
+                    <h4>Quick Links</h4>
+                    <ul>
+                        <li><a href="motstudios.html">Home</a></li>
+                        <li><a href="about.html">About</a></li>
+                        <li><a href="services.html">Services</a></li>
+                        <li><a href="portfolio.html">Portfolio</a></li>
+                        <li><a href="contact.html">Contact</a></li>
+                    </ul>
+                </div>
+                <div class="footer-links">
+                    <h4>Services</h4>
+                    <ul>
+                        <li><a href="services.html">Music Production</a></li>
+                        <li><a href="services.html">Mixing & Mastering</a></li>
+                        <li><a href="services.html">Visual Design</a></li>
+                        <li><a href="services.html">Video Production</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2026 MOTSTUDIOS. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Navbar Scroll Effect
+        const navbar = document.querySelector('.navbar');
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 50) {
+                navbar.classList.add('scrolled');
+            } else {
+                navbar.classList.remove('scrolled');
+            }
+        });
+
+        // Mobile Menu Toggle
+        const menuToggle = document.getElementById('menuToggle');
+        const navLinks = document.querySelector('.nav-links');
+
+        menuToggle.addEventListener('click', () => {
+            menuToggle.classList.toggle('active');
+            navLinks.classList.toggle('active');
+        });
+
+        document.querySelectorAll('.nav-links a').forEach(link => {
+            link.addEventListener('click', () => {
+                menuToggle.classList.remove('active');
+                navLinks.classList.remove('active');
+            });
+        });
+
+        // Contact Form
+        const contactForm = document.getElementById('contactForm');
+        if (contactForm) {
+            contactForm.addEventListener('submit', function(e) {
+                e.preventDefault();
+
+                const formData = new FormData(this);
+                const data = Object.fromEntries(formData);
+
+                const btn = this.querySelector('button[type="submit"]');
+                const originalText = btn.innerHTML;
+                btn.innerHTML = '<span>Message Sent!</span>';
+                btn.style.background = 'linear-gradient(135deg, #DC2626, #7F1D1D)';
+
+                this.reset();
+
+                setTimeout(() => {
+                    btn.innerHTML = originalText;
+                    btn.style.background = '';
+                }, 3000);
+
+                console.log('Form submitted:', data);
+            });
+        }
+
+        // FAQ Toggle
+        const faqItems = document.querySelectorAll('.faq-item');
+        faqItems.forEach(item => {
+            const question = item.querySelector('.faq-question');
+            question.addEventListener('click', () => {
+                const isActive = item.classList.contains('active');
+                faqItems.forEach(i => i.classList.remove('active'));
+                if (!isActive) {
+                    item.classList.add('active');
+                }
+            });
+        });
+
+        // Scroll Reveal Animation
+        const revealElements = document.querySelectorAll('.contact-item, .faq-item');
+        const revealObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, { threshold: 0.1 });
+
+        revealElements.forEach(el => {
+            el.style.opacity = '0';
+            el.style.transform = 'translateY(30px)';
+            el.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+            revealObserver.observe(el);
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,843 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About | MOTSTUDIOS</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-primary: #0a0a0f;
+            --bg-secondary: #12121a;
+            --bg-card: #1a1a25;
+            --text-primary: #ffffff;
+            --text-secondary: #a0a0b0;
+            --accent-primary: #DC2626;
+            --accent-secondary: #991B1B;
+            --accent-gradient: linear-gradient(135deg, #DC2626, #7F1D1D);
+            --border-color: rgba(255, 255, 255, 0.08);
+            --transition: all 0.3s ease;
+            --shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+        }
+
+        *, *::before, *::after {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+            font-size: 16px;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background-color: var(--bg-primary);
+            color: var(--text-primary);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+
+        ul {
+            list-style: none;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 24px;
+        }
+
+        h1, h2, h3, h4 {
+            font-family: 'Space Grotesk', sans-serif;
+            font-weight: 700;
+            line-height: 1.2;
+        }
+
+        .accent {
+            background: var(--accent-gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .navbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            padding: 20px 0;
+            transition: var(--transition);
+        }
+
+        .navbar.scrolled {
+            background: rgba(10, 10, 15, 0.95);
+            backdrop-filter: blur(20px);
+            padding: 15px 0;
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.3);
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 24px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .logo {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 1.5rem;
+            font-weight: 800;
+            letter-spacing: 2px;
+        }
+
+        .logo-accent {
+            background: var(--accent-gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 35px;
+        }
+
+        .nav-links a {
+            font-size: 0.95rem;
+            font-weight: 500;
+            color: var(--text-secondary);
+            transition: var(--transition);
+            position: relative;
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--accent-gradient);
+            transition: var(--transition);
+        }
+
+        .nav-links a:hover,
+        .nav-links a.active {
+            color: var(--text-primary);
+        }
+
+        .nav-links a:hover::after,
+        .nav-links a.active::after {
+            width: 100%;
+        }
+
+        .menu-toggle {
+            display: none;
+            flex-direction: column;
+            gap: 5px;
+            background: none;
+            border: none;
+            cursor: pointer;
+            padding: 5px;
+        }
+
+        .menu-toggle span {
+            width: 25px;
+            height: 2px;
+            background: var(--text-primary);
+            transition: var(--transition);
+        }
+
+        .page-hero {
+            padding: 180px 24px 100px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .page-hero::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: 
+                radial-gradient(ellipse at 20% 50%, rgba(220, 38, 38, 0.1) 0%, transparent 50%),
+                radial-gradient(ellipse at 80% 20%, rgba(153, 27, 27, 0.08) 0%, transparent 50%);
+            z-index: 0;
+        }
+
+        .page-hero-content {
+            position: relative;
+            z-index: 1;
+        }
+
+        .page-tag {
+            display: inline-block;
+            padding: 8px 20px;
+            background: rgba(220, 38, 38, 0.1);
+            border: 1px solid rgba(220, 38, 38, 0.3);
+            border-radius: 50px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: #DC2626;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: 20px;
+        }
+
+        .page-title {
+            font-size: clamp(2.5rem, 6vw, 4rem);
+            margin-bottom: 16px;
+        }
+
+        .page-description {
+            font-size: 1.2rem;
+            color: var(--text-secondary);
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        section {
+            padding: 80px 0;
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 60px;
+        }
+
+        .section-tag {
+            display: inline-block;
+            padding: 8px 20px;
+            background: rgba(220, 38, 38, 0.1);
+            border: 1px solid rgba(220, 38, 38, 0.3);
+            border-radius: 50px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: #DC2626;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: 20px;
+        }
+
+        .section-title {
+            font-size: clamp(2rem, 5vw, 3rem);
+            margin-bottom: 16px;
+        }
+
+        .section-description {
+            font-size: 1.1rem;
+            color: var(--text-secondary);
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .about-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 80px;
+            align-items: center;
+        }
+
+        .about-content .section-title {
+            margin-bottom: 24px;
+        }
+
+        .about-text {
+            color: var(--text-secondary);
+            margin-bottom: 20px;
+            line-height: 1.8;
+        }
+
+        .about-skills {
+            margin-top: 40px;
+        }
+
+        .skill {
+            margin-bottom: 24px;
+        }
+
+        .skill-header {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 10px;
+        }
+
+        .skill-name {
+            font-weight: 600;
+        }
+
+        .skill-percent {
+            color: #DC2626;
+            font-weight: 600;
+        }
+
+        .skill-bar {
+            height: 8px;
+            background: var(--bg-card);
+            border-radius: 4px;
+            overflow: hidden;
+        }
+
+        .skill-progress {
+            height: 100%;
+            background: var(--accent-gradient);
+            border-radius: 4px;
+            width: 0;
+            transition: width 1.5s ease;
+        }
+
+        .about-image {
+            position: relative;
+        }
+
+        .image-frame {
+            position: relative;
+            border-radius: 24px;
+            overflow: hidden;
+        }
+
+        .studio-avatar {
+            width: 100%;
+            aspect-ratio: 1;
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 40px;
+        }
+
+        .studio-avatar svg {
+            width: 100%;
+            height: auto;
+        }
+
+        .experience-badge {
+            position: absolute;
+            bottom: 30px;
+            right: 30px;
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            padding: 20px;
+            text-align: center;
+            backdrop-filter: blur(10px);
+        }
+
+        .badge-number {
+            display: block;
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 2rem;
+            font-weight: 800;
+            background: var(--accent-gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .badge-text {
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+        }
+
+        .team-section {
+            background: var(--bg-secondary);
+        }
+
+        .team-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+        }
+
+        .team-card {
+            background: var(--bg-card);
+            border-radius: 20px;
+            padding: 30px;
+            text-align: center;
+            border: 1px solid var(--border-color);
+            transition: var(--transition);
+        }
+
+        .team-card:hover {
+            transform: translateY(-5px);
+            border-color: rgba(220, 38, 38, 0.3);
+        }
+
+        .team-avatar {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            background: var(--accent-gradient);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 20px;
+            font-size: 2rem;
+            font-weight: 800;
+            color: white;
+        }
+
+        .team-name {
+            font-size: 1.3rem;
+            margin-bottom: 8px;
+        }
+
+        .team-role {
+            color: var(--accent-primary);
+            font-size: 0.9rem;
+            font-weight: 600;
+            margin-bottom: 12px;
+        }
+
+        .team-bio {
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+        }
+
+        .values-section {
+            background: var(--bg-secondary);
+        }
+
+        .values-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 30px;
+        }
+
+        .value-card {
+            background: var(--bg-card);
+            border-radius: 20px;
+            padding: 40px;
+            border: 1px solid var(--border-color);
+            transition: var(--transition);
+        }
+
+        .value-card:hover {
+            transform: translateY(-5px);
+            border-color: rgba(220, 38, 38, 0.3);
+        }
+
+        .value-icon {
+            width: 60px;
+            height: 60px;
+            border-radius: 16px;
+            background: rgba(220, 38, 38, 0.1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #DC2626;
+            margin-bottom: 20px;
+        }
+
+        .value-title {
+            font-size: 1.3rem;
+            margin-bottom: 12px;
+        }
+
+        .value-description {
+            color: var(--text-secondary);
+            line-height: 1.7;
+        }
+
+        .footer {
+            background: var(--bg-secondary);
+            border-top: 1px solid var(--border-color);
+            padding: 60px 0 30px;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr;
+            gap: 60px;
+            margin-bottom: 40px;
+        }
+
+        .footer-brand p {
+            color: var(--text-secondary);
+            margin-top: 16px;
+            max-width: 300px;
+        }
+
+        .footer-links h4 {
+            font-size: 1rem;
+            margin-bottom: 20px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .footer-links ul {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .footer-links a {
+            color: var(--text-secondary);
+            transition: var(--transition);
+        }
+
+        .footer-links a:hover {
+            color: #DC2626;
+        }
+
+        .footer-bottom {
+            padding-top: 30px;
+            border-top: 1px solid var(--border-color);
+            text-align: center;
+        }
+
+        .footer-bottom p {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+        }
+
+        @media (max-width: 992px) {
+            .about-grid {
+                grid-template-columns: 1fr;
+                gap: 60px;
+            }
+
+            .about-image {
+                max-width: 400px;
+                margin: 0 auto;
+            }
+
+            .footer-content {
+                grid-template-columns: 1fr 1fr;
+                gap: 40px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .nav-links {
+                position: fixed;
+                top: 0;
+                right: -100%;
+                width: 70%;
+                height: 100vh;
+                background: var(--bg-secondary);
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
+                gap: 30px;
+                transition: var(--transition);
+                box-shadow: -10px 0 30px rgba(0, 0, 0, 0.3);
+            }
+
+            .nav-links.active {
+                right: 0;
+            }
+
+            .menu-toggle {
+                display: flex;
+                z-index: 1001;
+            }
+
+            .menu-toggle.active span:nth-child(1) {
+                transform: rotate(45deg) translate(5px, 5px);
+            }
+
+            .menu-toggle.active span:nth-child(2) {
+                opacity: 0;
+            }
+
+            .menu-toggle.active span:nth-child(3) {
+                transform: rotate(-45deg) translate(5px, -5px);
+            }
+
+            .footer-content {
+                grid-template-columns: 1fr;
+                text-align: center;
+            }
+
+            .footer-brand p {
+                margin: 16px auto 0;
+            }
+
+            .footer-links ul {
+                align-items: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="motstudios.html" class="logo">MOT<span class="logo-accent">STUDIOS</span></a>
+            <ul class="nav-links">
+                <li><a href="motstudios.html">Home</a></li>
+                <li><a href="about.html" class="active">About</a></li>
+                <li><a href="services.html">Services</a></li>
+                <li><a href="portfolio.html">Portfolio</a></li>
+                <li><a href="contact.html">Contact</a></li>
+            </ul>
+            <button class="menu-toggle" id="menuToggle">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+        </div>
+    </nav>
+
+    <!-- Page Hero -->
+    <section class="page-hero">
+        <div class="page-hero-content">
+            <span class="page-tag">About Us</span>
+            <h1 class="page-title">The Team Behind <span class="accent">MOTSTUDIOS</span></h1>
+            <p class="page-description">Learn more about our story, our team, and what drives us to create exceptional work.</p>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about">
+        <div class="container">
+            <div class="about-grid">
+                <div class="about-content">
+                    <span class="section-tag">Our Story</span>
+                    <h2 class="section-title">Who We <span class="accent">Are</span></h2>
+                    <p class="about-text">
+                        MOTSTUDIOS was founded with a passion for creating exceptional content. 
+                        We believe in pushing creative boundaries and delivering work that exceeds expectations.
+                    </p>
+                    <p class="about-text">
+                        Our team combines technical expertise with artistic vision to produce 
+                        results that resonate with audiences and elevate brands.
+                    </p>
+                    <div class="about-skills">
+                        <div class="skill">
+                            <div class="skill-header">
+                                <span class="skill-name">Music Production</span>
+                                <span class="skill-percent">95%</span>
+                            </div>
+                            <div class="skill-bar">
+                                <div class="skill-progress" data-progress="95"></div>
+                            </div>
+                        </div>
+                        <div class="skill">
+                            <div class="skill-header">
+                                <span class="skill-name">Visual Design</span>
+                                <span class="skill-percent">90%</span>
+                            </div>
+                            <div class="skill-bar">
+                                <div class="skill-progress" data-progress="90"></div>
+                            </div>
+                        </div>
+                        <div class="skill">
+                            <div class="skill-header">
+                                <span class="skill-name">Video Production</span>
+                                <span class="skill-percent">85%</span>
+                            </div>
+                            <div class="skill-bar">
+                                <div class="skill-progress" data-progress="85"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="about-image">
+                    <div class="image-frame">
+                        <div class="studio-avatar">
+                            <svg viewBox="0 0 200 200" fill="none">
+                                <circle cx="100" cy="100" r="90" stroke="url(#studioGrad)" stroke-width="2"/>
+                                <text x="100" y="90" text-anchor="middle" fill="white" font-size="24" font-weight="bold">MOT</text>
+                                <text x="100" y="120" text-anchor="middle" fill="url(#studioGrad)" font-size="16" font-weight="bold">STUDIOS</text>
+                                <defs>
+                                    <linearGradient id="studioGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                                        <stop offset="0%" stop-color="#DC2626"/>
+                                        <stop offset="100%" stop-color="#7F1D1D"/>
+                                    </linearGradient>
+                                </defs>
+                            </svg>
+                        </div>
+                        <div class="experience-badge">
+                            <span class="badge-number">5+</span>
+                            <span class="badge-text">Years of<br>Experience</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Team Section -->
+    <section id="team" class="team-section">
+        <div class="container">
+            <div class="section-header">
+                <span class="section-tag">Our Team</span>
+                <h2 class="section-title">Meet the <span class="accent">Team</span></h2>
+                <p class="section-description">The creative minds behind MOTSTUDIOS</p>
+            </div>
+            <div class="team-grid">
+                <div class="team-card">
+                    <div class="team-avatar">M</div>
+                    <h3 class="team-name">MOT</h3>
+                    <p class="team-role">Founder & Producer</p>
+                    <p class="team-bio">Music producer with 8+ years of experience in the industry.</p>
+                </div>
+                <div class="team-card">
+                    <div class="team-avatar">S</div>
+                    <h3 class="team-name">Studio Team</h3>
+                    <p class="team-role">Creative Directors</p>
+                    <p class="team-bio">Visual designers and video producers bringing ideas to life.</p>
+                </div>
+                <div class="team-card">
+                    <div class="team-avatar">C</div>
+                    <h3 class="team-name">Collaborators</h3>
+                    <p class="team-role">Artists & Partners</p>
+                    <p class="team-bio">A network of talented artists and industry professionals.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Values Section -->
+    <section id="values" class="values-section">
+        <div class="container">
+            <div class="section-header">
+                <span class="section-tag">Our Values</span>
+                <h2 class="section-title">What We <span class="accent">Believe</span></h2>
+                <p class="section-description">The principles that guide everything we do</p>
+            </div>
+            <div class="values-grid">
+                <div class="value-card">
+                    <div class="value-icon">
+                        <svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
+                        </svg>
+                    </div>
+                    <h3 class="value-title">Quality First</h3>
+                    <p class="value-description">We never compromise on quality. Every project receives our full attention and dedication.</p>
+                </div>
+                <div class="value-card">
+                    <div class="value-icon">
+                        <svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"></path>
+                        </svg>
+                    </div>
+                    <h3 class="value-title">Innovation</h3>
+                    <p class="value-description">We constantly explore new techniques and technologies to stay ahead of the curve.</p>
+                </div>
+                <div class="value-card">
+                    <div class="value-icon">
+                        <svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+                            <circle cx="9" cy="7" r="4"></circle>
+                            <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
+                            <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+                        </svg>
+                    </div>
+                    <h3 class="value-title">Collaboration</h3>
+                    <p class="value-description">We work closely with our clients to understand their vision and bring it to life.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-brand">
+                    <a href="motstudios.html" class="logo">MOT<span class="logo-accent">STUDIOS</span></a>
+                    <p>Creative studio specializing in music production, visual design, and digital experiences.</p>
+                </div>
+                <div class="footer-links">
+                    <h4>Quick Links</h4>
+                    <ul>
+                        <li><a href="motstudios.html">Home</a></li>
+                        <li><a href="about.html">About</a></li>
+                        <li><a href="services.html">Services</a></li>
+                        <li><a href="portfolio.html">Portfolio</a></li>
+                        <li><a href="contact.html">Contact</a></li>
+                    </ul>
+                </div>
+                <div class="footer-links">
+                    <h4>Services</h4>
+                    <ul>
+                        <li><a href="services.html">Music Production</a></li>
+                        <li><a href="services.html">Mixing & Mastering</a></li>
+                        <li><a href="services.html">Visual Design</a></li>
+                        <li><a href="services.html">Video Production</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2026 MOTSTUDIOS. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Navbar Scroll Effect
+        const navbar = document.querySelector('.navbar');
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 50) {
+                navbar.classList.add('scrolled');
+            } else {
+                navbar.classList.remove('scrolled');
+            }
+        });
+
+        // Mobile Menu Toggle
+        const menuToggle = document.getElementById('menuToggle');
+        const navLinks = document.querySelector('.nav-links');
+
+        menuToggle.addEventListener('click', () => {
+            menuToggle.classList.toggle('active');
+            navLinks.classList.toggle('active');
+        });
+
+        document.querySelectorAll('.nav-links a').forEach(link => {
+            link.addEventListener('click', () => {
+                menuToggle.classList.remove('active');
+                navLinks.classList.remove('active');
+            });
+        });
+
+        // Skill Bar Animation
+        const skillBars = document.querySelectorAll('.skill-progress');
+        const skillObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const bar = entry.target;
+                    const progress = bar.getAttribute('data-progress');
+                    bar.style.width = progress + '%';
+                    skillObserver.unobserve(bar);
+                }
+            });
+        }, { threshold: 0.5 });
+
+        skillBars.forEach(bar => skillObserver.observe(bar));
+
+        // Scroll Reveal Animation
+        const revealElements = document.querySelectorAll('.team-card, .value-card');
+        const revealObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, { threshold: 0.1 });
+
+        revealElements.forEach(el => {
+            el.style.opacity = '0';
+            el.style.transform = 'translateY(30px)';
+            el.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+            revealObserver.observe(el);
+        });
+    </script>
+</body>
+</html>
