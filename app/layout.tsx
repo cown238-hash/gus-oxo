@@ -33,7 +33,6 @@ export const metadata: Metadata = {
     "free file host",
     "GSO",
   ],
-  alternates: { canonical: "/" },
   openGraph: {
     type: "website",
     siteName: SITE_NAME,
