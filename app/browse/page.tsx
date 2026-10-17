@@ -1,12 +1,13 @@
-import type { Metadata } from "next";
 import { listPublicShares } from "@/app/lib/browse";
+import { pageMetadata } from "@/app/lib/seo";
 import BrowseContent from "./browse-content";
 
-export const metadata: Metadata = {
+export const metadata = pageMetadata({
   title: "Explore files — GSO",
   description:
     "Browse the latest files and links shared publicly on GSO — search by name and filter by category.",
-};
+  path: "/browse",
+});
 
 export default async function BrowsePage(props: { searchParams: Promise<{ q?: string; cat?: string; page?: string }> }) {
   const sp = await props.searchParams;

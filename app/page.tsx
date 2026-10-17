@@ -7,6 +7,45 @@ import SiteHeader from "./components/site-header";
 import Uploader from "./components/uploader";
 import { listPublicShares } from "./lib/browse";
 import { CATEGORY_META, FILE_CATEGORIES, type FileCategory } from "./lib/share";
+import { pageMetadata } from "./lib/seo";
+
+export const metadata = pageMetadata({
+  title: "GSO — Upload & share files and links",
+  path: "/",
+});
+
+const faqs = [
+  {
+    q: "Is GSO free to use?",
+    a: "Yes, GSO is completely free. You can upload up to 50 files at once, each up to 100 MB, and share them with anyone — no account required.",
+  },
+  {
+    q: "How long do files stay online?",
+    a: "Files stay online indefinitely until you delete them or an admin removes them. There is no expiration date on share links.",
+  },
+  {
+    q: "Can I share private files?",
+    a: "Yes. When uploading, uncheck 'List on the Explore page' to create a link-only share. Only people with the link can access it.",
+  },
+  {
+    q: "What file types are supported?",
+    a: "All file types are supported — images, videos, audio, documents, archives, and more. Files are automatically categorized by their extension.",
+  },
+  {
+    q: "Is there a file size limit?",
+    a: "Each file can be up to 100 MB. You can upload up to 50 files in a single share.",
+  },
+];
+
+const faqJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  mainEntity: faqs.map((faq) => ({
+    "@type": "Question",
+    name: faq.q,
+    acceptedAnswer: { "@type": "Answer", text: faq.a },
+  })),
+};
 
 const steps = [
   {
@@ -72,6 +111,11 @@ export default async function Home() {
     <div className="relative flex min-h-full flex-col">
       {/* Header */}
       <SiteHeader activeNav="home" />
+
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(faqJsonLd) }}
+      />
 
       {/* Hero + uploader */}
       <section id="top" className="relative overflow-hidden">
@@ -286,28 +330,7 @@ export default async function Home() {
         </Reveal>
 
         <div className="mt-8 space-y-4">
-          {[
-            {
-              q: "Is GSO free to use?",
-              a: "Yes, GSO is completely free. You can upload up to 50 files at once, each up to 100 MB, and share them with anyone — no account required.",
-            },
-            {
-              q: "How long do files stay online?",
-              a: "Files stay online indefinitely until you delete them or an admin removes them. There is no expiration date on share links.",
-            },
-            {
-              q: "Can I share private files?",
-              a: "Yes. When uploading, uncheck 'List on the Explore page' to create a link-only share. Only people with the link can access it.",
-            },
-            {
-              q: "What file types are supported?",
-              a: "All file types are supported — images, videos, audio, documents, archives, and more. Files are automatically categorized by their extension.",
-            },
-            {
-              q: "Is there a file size limit?",
-              a: "Each file can be up to 100 MB. You can upload up to 50 files in a single share.",
-            },
-          ].map((faq, index) => (
+          {faqs.map((faq, index) => (
             <Reveal key={faq.q} delay={index * 60}>
               <details className="group rounded-2xl border border-white/8 bg-white/[0.03] px-6 py-4 transition-colors open:border-accent/30">
                 <summary className="flex cursor-pointer list-none items-center justify-between gap-4 text-sm font-medium [&::-webkit-details-marker]:hidden">

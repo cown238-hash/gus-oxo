@@ -1,13 +1,14 @@
-import type { Metadata } from "next";
 import SiteFooter from "@/app/components/site-footer";
 import SiteHeader from "@/app/components/site-header";
+import { pageMetadata } from "@/app/lib/seo";
 import ContactContent from "./contact-content";
 
-export const metadata: Metadata = {
+export const metadata = pageMetadata({
   title: "Contact us — GSO",
   description:
-    "Get in touch with the GSO team — email, address, and support information.",
-};
+    "Get in touch with the GSO team — email and support information.",
+  path: "/contact",
+});
 
 export default function ContactPage() {
   return (
