@@ -94,6 +94,11 @@ export default function SiteFooter({
               </Link>
             </li>
             <li>
+              <Link href="/help" className={link}>
+                Help &amp; FAQ
+              </Link>
+            </li>
+            <li>
               <Link href="/admin" className={link}>
                 Admin
               </Link>

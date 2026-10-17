@@ -21,7 +21,7 @@ const faqs = [
   },
   {
     q: "How long do files stay online?",
-    a: "Files stay online indefinitely until you delete them or an admin removes them. There is no expiration date on share links.",
+    a: "Files stay online indefinitely — there is no expiration date on share links. A share is only removed if an admin takes it down or you ask us to delete it.",
   },
   {
     q: "Can I share private files?",
@@ -65,6 +65,29 @@ const steps = [
     title: "Share anywhere",
     description:
       "Send it in a chat, an email or a tweet. Anyone with the link can open and download.",
+  },
+];
+
+const features = [
+  {
+    title: "No account required",
+    description:
+      "Start sharing the moment you land — no sign-up, no email, no password. The link is the only thing to keep.",
+  },
+  {
+    title: "Fast straight to storage",
+    description:
+      "Files upload directly from your browser to cloud storage, so even large files are ready in seconds.",
+  },
+  {
+    title: "One link for everything",
+    description:
+      "Bundle up to 50 files and 50 links behind a single short URL — send it once and everything travels together.",
+  },
+  {
+    title: "Link-only when you want",
+    description:
+      "Uncheck “List on the Explore page” to keep a share unlisted. Only people with the link can open it.",
   },
 ];
 
@@ -323,10 +346,42 @@ export default async function Home() {
         </div>
       </section>
 
+      {/* Why GSO */}
+      <section id="why" className="mx-auto w-full max-w-5xl scroll-mt-28 px-6 py-16">
+        <Reveal>
+          <SectionHead title="Why GSO" hint="Built for speed and simplicity" />
+        </Reveal>
+
+        <div className="mt-8 grid gap-4 sm:grid-cols-2">
+          {features.map((feature, index) => (
+            <Reveal key={feature.title} delay={index * 60}>
+              <div className="h-full rounded-2xl border border-white/8 bg-white/[0.03] p-6 hover:border-accent/40 hover:shadow-[0_20px_60px_-30px] hover:shadow-accent/50">
+                <h3 className="text-base font-semibold tracking-tight">
+                  {feature.title}
+                </h3>
+                <p className="mt-2 text-sm leading-6 text-muted">
+                  {feature.description}
+                </p>
+              </div>
+            </Reveal>
+          ))}
+        </div>
+      </section>
+
       {/* FAQ */}
       <section id="faq" className="mx-auto w-full max-w-5xl scroll-mt-28 px-6 py-16">
         <Reveal>
-          <SectionHead title="Frequently asked questions" />
+          <SectionHead
+            title="Frequently asked questions"
+            action={
+              <Link
+                href="/help"
+                className="shrink-0 text-sm text-muted transition-colors hover:text-accent"
+              >
+                See all help →
+              </Link>
+            }
+          />
         </Reveal>
 
         <div className="mt-8 space-y-4">
