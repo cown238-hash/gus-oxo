@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 
 /** Canonical origin for the migrated domain. */
-export const SITE_URL = "https://wksl.site";
+export const SITE_URL = "https://www.wksl.site";
 export const SITE_NAME = "GSO";
 export const SITE_DESCRIPTION =
   "Drop a file or paste a link, get one shareable URL in seconds — or browse what others shared on the Explore page. Fast, no account required.";

@@ -50,7 +50,7 @@ export default function OpengraphImage() {
             color: "#a0a0a0",
           }}
         >
-          Fast, no-account file &amp; link sharing — wksl.site
+          Fast, no-account file &amp; link sharing — www.wksl.site
         </div>
       </div>
     ),

@@ -1,28 +1,27 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
-  // Domain migration: any request still arriving on the old (or www) hosts is
-  // permanently redirected to the new canonical origin. This complements the
-  // Vercel Dashboard domain redirect, so the old domain keeps working for as
-  // long as its DNS points at this deployment.
+  // Domain migration: the canonical host is `www.wksl.site`. Requests still
+  // arriving on the old domains (or the bare apex) are permanently redirected
+  // there, which complements the Vercel Dashboard domain redirect.
   async redirects() {
     return [
       {
         source: "/:path*",
         has: [{ type: "host", value: "rosantoscs1997.com" }],
-        destination: "https://wksl.site/:path*",
+        destination: "https://www.wksl.site/:path*",
         permanent: true,
       },
       {
         source: "/:path*",
         has: [{ type: "host", value: "www.rosantoscs1997.com" }],
-        destination: "https://wksl.site/:path*",
+        destination: "https://www.wksl.site/:path*",
         permanent: true,
       },
       {
         source: "/:path*",
-        has: [{ type: "host", value: "www.wksl.site" }],
-        destination: "https://wksl.site/:path*",
+        has: [{ type: "host", value: "wksl.site" }],
+        destination: "https://www.wksl.site/:path*",
         permanent: true,
       },
     ];

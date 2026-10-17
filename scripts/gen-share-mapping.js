@@ -11,7 +11,7 @@ const { list } = require('@vercel/blob');
 
 const BLOB_TOKEN = process.argv[2] || process.env.BLOB_READ_WRITE_TOKEN;
 const OLD_DOMAIN = 'rosantoscs1997.com';
-const NEW_DOMAIN = 'wksl.site';
+const NEW_DOMAIN = 'www.wksl.site';
 
 if (!BLOB_TOKEN) {
   console.error('❌  Need BLOB_READ_WRITE_TOKEN');
