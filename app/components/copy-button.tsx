@@ -1,5 +1,6 @@
 "use client";
 
+import { motion } from "motion/react";
 import { useState } from "react";
 import { useToast } from "./toast";
 
@@ -26,14 +27,16 @@ export default function CopyButton({
   };
 
   return (
-    <button
+    <motion.button
       onClick={copy}
+      whileHover={{ y: -4, boxShadow: "0 0 50px -6px var(--accent)" }}
+      whileTap={{ scale: 0.98 }}
       className={
         className ??
-        "h-10 shrink-0 rounded-full bg-accent px-5 text-sm font-medium text-background shadow-[0_0_40px_-8px] shadow-accent transition-transform hover:-translate-y-0.5 active:scale-[0.98]"
+        "h-10 shrink-0 rounded-full bg-accent px-5 text-sm font-medium text-background shadow-[0_0_40px_-8px] shadow-accent"
       }
     >
       {copied ? "Copied!" : label}
-    </button>
+    </motion.button>
   );
 }

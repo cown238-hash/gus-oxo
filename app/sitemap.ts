@@ -1,7 +1,7 @@
 import type { MetadataRoute } from "next";
 
 export default function sitemap(): MetadataRoute.Sitemap {
-  const baseUrl = "https://rosantoscs1997.com";
+  const baseUrl = "https://wksl.site";
   const lastModified = new Date();
 
   return [
@@ -16,6 +16,12 @@ export default function sitemap(): MetadataRoute.Sitemap {
       lastModified,
       changeFrequency: "daily",
       priority: 0.8,
+    },
+    {
+      url: `${baseUrl}/charts`,
+      lastModified,
+      changeFrequency: "daily",
+      priority: 0.6,
     },
     {
       url: `${baseUrl}/about`,

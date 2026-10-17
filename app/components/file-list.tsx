@@ -1,5 +1,6 @@
 "use client";
 
+import { motion } from "motion/react";
 import { useMemo, useState } from "react";
 import CategoryBadge from "./category-badge";
 import { FileCoverLarge, FileMedia } from "./file-preview";
@@ -13,7 +14,7 @@ import {
 } from "@/app/lib/share";
 
 const chipClass = (selected: boolean) =>
-  `inline-flex h-8 items-center gap-2 rounded-full border px-3.5 text-xs font-medium transition-colors ${
+  `inline-flex h-8 items-center gap-2 rounded-full border px-3.5 text-xs font-medium transition-all btn-press ${
     selected
       ? "border-accent/50 bg-accent/10 text-foreground"
       : "border-white/12 text-muted hover:border-white/25 hover:text-foreground"
@@ -80,9 +81,11 @@ export default function FileList({ files }: { files: SharedFile[] }) {
 
       <ul className="mt-5 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
         {visible.map((file) => (
-          <li
+          <motion.li
             key={file.url}
-            className="group overflow-hidden rounded-2xl border border-white/8 bg-white/[0.03] transition-colors hover:border-accent/40"
+            className="group overflow-hidden rounded-2xl border border-white/8 bg-white/[0.03]"
+            whileHover={{ y: -4, borderColor: "color-mix(in oklab, var(--accent) 40%, transparent)", boxShadow: "0 20px 60px -30px color-mix(in oklab, var(--accent) 50%, transparent)" }}
+            transition={{ type: "spring", stiffness: 300, damping: 25 }}
           >
             {/* Cover image area */}
             <div className="relative aspect-[4/3] w-full overflow-hidden bg-white/[0.02]">
@@ -112,16 +115,18 @@ export default function FileList({ files }: { files: SharedFile[] }) {
                 <span className="text-xs text-muted">
                   {CATEGORY_META[fileCategory(file.name)].label}
                 </span>
-                <a
+                <motion.a
                   href={file.downloadUrl}
-                  className="rounded-full border border-white/12 px-4 py-1.5 text-sm transition-all hover:border-accent/50 hover:bg-white/5 active:scale-95"
+                  whileHover={{ y: -2 }}
+                  whileTap={{ scale: 0.95 }}
+                  className="rounded-full border border-white/12 px-4 py-1.5 text-sm transition-all hover:border-accent/50 hover:bg-white/5"
                 >
                   Download
-                </a>
+                </motion.a>
               </div>
               <FileMedia file={file} />
             </div>
-          </li>
+          </motion.li>
         ))}
       </ul>
       {visible.length === 0 && (

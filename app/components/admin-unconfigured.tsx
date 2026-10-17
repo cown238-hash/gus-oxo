@@ -1,3 +1,6 @@
+"use client";
+
+import { motion } from "motion/react";
 import Link from "next/link";
 
 /** Shown on admin screens until ADMIN_PASSWORD exists. */
@@ -15,12 +18,18 @@ export default function AdminUnconfigured() {
           restart the dev server. The password protects{" "}
           <code className="font-mono text-accent">/admin</code>.
         </p>
-        <Link
-          href="/"
-          className="mt-8 inline-flex h-11 items-center rounded-full bg-accent px-6 text-sm font-medium text-background transition-transform hover:-translate-y-0.5"
+        <motion.div
+          whileHover={{ y: -4, boxShadow: "0 0 40px -8px var(--accent)" }}
+          whileTap={{ scale: 0.98 }}
+          className="mt-8 inline-block"
         >
-          Back to upload
-        </Link>
+          <Link
+            href="/"
+            className="inline-flex h-11 items-center rounded-full bg-accent px-6 text-sm font-medium text-background shadow-[0_0_40px_-8px] shadow-accent"
+          >
+            Back to upload
+          </Link>
+        </motion.div>
       </div>
     </div>
   );

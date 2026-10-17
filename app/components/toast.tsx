@@ -1,5 +1,6 @@
 "use client";
 
+import { AnimatePresence, motion } from "motion/react";
 import {
   createContext,
   useCallback,
@@ -59,26 +60,33 @@ export default function ToastProvider({ children }: { children: ReactNode }) {
         className="pointer-events-none fixed inset-x-0 bottom-5 z-[100] flex flex-col items-center gap-2 px-4"
         aria-live="polite"
       >
-        {toasts.map((item) => (
-          <div
-            key={item.id}
-            className={`toast-in pointer-events-auto flex items-center gap-2.5 rounded-full border px-4 py-2.5 text-sm shadow-[0_20px_50px_-20px_rgba(0,0,0,0.7)] backdrop-blur-md ${
-              item.variant === "success"
-                ? "border-accent/40 bg-background/95 text-foreground"
-                : "border-red-500/40 bg-background/95 text-red-400"
-            }`}
-          >
-            <span
-              aria-hidden
-              className={
-                item.variant === "success" ? "text-accent" : "text-red-400"
-              }
+        <AnimatePresence>
+          {toasts.map((item) => (
+            <motion.div
+              key={item.id}
+              layout
+              initial={{ opacity: 0, y: 12, scale: 0.97 }}
+              animate={{ opacity: 1, y: 0, scale: 1 }}
+              exit={{ opacity: 0, y: 8, scale: 0.97 }}
+              transition={{ type: "spring", stiffness: 400, damping: 30 }}
+              className={`pointer-events-auto flex items-center gap-2.5 rounded-full border px-4 py-2.5 text-sm shadow-[0_20px_50px_-20px_rgba(0,0,0,0.7)] backdrop-blur-md ${
+                item.variant === "success"
+                  ? "border-accent/40 bg-background/95 text-foreground"
+                  : "border-red-500/40 bg-background/95 text-red-400"
+              }`}
             >
-              {item.variant === "success" ? "✓" : "✕"}
-            </span>
-            {item.message}
-          </div>
-        ))}
+              <span
+                aria-hidden
+                className={
+                  item.variant === "success" ? "text-accent" : "text-red-400"
+                }
+              >
+                {item.variant === "success" ? "✓" : "✕"}
+              </span>
+              {item.message}
+            </motion.div>
+          ))}
+        </AnimatePresence>
       </div>
     </ToastContext.Provider>
   );

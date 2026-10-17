@@ -1,3 +1,6 @@
+"use client";
+
+import { motion } from "motion/react";
 import Link from "next/link";
 import Logo from "./logo";
 import { CATEGORY_META, FILE_CATEGORIES } from "@/app/lib/share";
@@ -46,7 +49,11 @@ export default function SiteFooter({
               </Link>
             </li>
             {FILE_CATEGORIES.map((category) => (
-              <li key={category}>
+              <motion.li
+                key={category}
+                whileHover={{ x: 4 }}
+                transition={{ type: "spring", stiffness: 300, damping: 25 }}
+              >
                 <Link
                   href={`/browse?cat=${category}`}
                   className={`inline-flex items-center gap-2 ${link}`}
@@ -57,7 +64,7 @@ export default function SiteFooter({
                   />
                   {CATEGORY_META[category].label}
                 </Link>
-              </li>
+              </motion.li>
             ))}
           </ul>
         </div>
@@ -112,22 +119,26 @@ export default function SiteFooter({
           className={`mx-auto flex w-full ${container} flex-wrap items-center gap-x-6 gap-y-3 px-6 py-5 text-sm`}
         >
           <h2 className={columnTitle}>Contact</h2>
-          <a
+          <motion.a
             href="mailto:cown238@gmail.com"
+            whileHover={{ x: 4 }}
+            transition={{ type: "spring", stiffness: 300, damping: 25 }}
             className="inline-flex items-center gap-2 text-muted transition-colors hover:text-foreground"
           >
             <span className="h-1.5 w-1.5 rounded-full bg-accent" aria-hidden />
             cown238@gmail.com
-          </a>
-          <a
+          </motion.a>
+          <motion.a
             href="https://www.youtube.com/@Wongsakone"
             target="_blank"
             rel="noopener noreferrer"
+            whileHover={{ x: 4 }}
+            transition={{ type: "spring", stiffness: 300, damping: 25 }}
             className="inline-flex items-center gap-2 text-muted transition-colors hover:text-foreground"
           >
             <span className="h-1.5 w-1.5 rounded-full bg-accent-2" aria-hidden />
             youtube.com/@Wongsakone
-          </a>
+          </motion.a>
         </div>
       </div>
 
@@ -141,12 +152,22 @@ export default function SiteFooter({
             anyone who has them.
           </p>
           <div className="flex items-center gap-5">
-            <Link href="/about" className={link}>
-              About
-            </Link>
-            <Link href="/#upload" className={link}>
-              Upload something ↑
-            </Link>
+            <motion.div
+              whileHover={{ x: 4 }}
+              transition={{ type: "spring", stiffness: 300, damping: 25 }}
+            >
+              <Link href="/about" className={link}>
+                About
+              </Link>
+            </motion.div>
+            <motion.div
+              whileHover={{ x: 4 }}
+              transition={{ type: "spring", stiffness: 300, damping: 25 }}
+            >
+              <Link href="/#upload" className={link}>
+                Upload something ↑
+              </Link>
+            </motion.div>
           </div>
         </div>
       </div>

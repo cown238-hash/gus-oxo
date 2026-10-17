@@ -78,7 +78,9 @@ export default async function Home() {
         <div className="glow pointer-events-none absolute inset-0" aria-hidden />
         <div className="grid-overlay pointer-events-none absolute inset-0" aria-hidden />
         <div className="relative mx-auto w-full max-w-5xl px-6 pb-24 pt-20 sm:pt-28">
-          <div className="fade-up flex items-center gap-3 text-xs uppercase tracking-[0.2em] text-muted">
+          <div
+            className="flex items-center gap-3 text-xs uppercase tracking-[0.2em] text-muted"
+          >
             <span className="relative flex h-2 w-2">
               <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-accent opacity-75" />
               <span className="relative inline-flex h-2 w-2 rounded-full bg-accent" />
@@ -87,45 +89,44 @@ export default async function Home() {
           </div>
 
           <h1
-            className="fade-up mt-8 max-w-3xl text-4xl font-semibold leading-[1.05] tracking-tight sm:text-6xl lg:text-7xl"
-            style={{ animationDelay: "80ms" }}
+            className="mt-8 max-w-3xl text-4xl font-semibold leading-[1.05] tracking-tight sm:text-6xl lg:text-7xl"
           >
             Drop a file.{" "}
-            <span className="bg-gradient-to-r from-accent to-accent-2 bg-clip-text text-transparent">
+            <span className="bg-gradient-to-r from-accent to-accent-2 bg-clip-text text-transparent animate-gradient">
               Share a link.
             </span>
           </h1>
 
           <p
-            className="fade-up mt-6 max-w-xl text-lg leading-8 text-muted"
-            style={{ animationDelay: "160ms" }}
+            className="mt-6 max-w-xl text-lg leading-8 text-muted"
           >
             Upload files or paste a URL and get one shareable link in seconds —
             no sign-up, no clutter.
           </p>
 
           <div
-            className="fade-up mt-8 flex flex-wrap gap-3"
-            style={{ animationDelay: "240ms" }}
+            className="mt-8 flex flex-wrap gap-3"
           >
             <a
               href="#upload"
-              className="inline-flex h-11 items-center rounded-full bg-accent px-6 text-sm font-medium text-background shadow-[0_0_40px_-10px] shadow-accent transition-transform hover:-translate-y-0.5 active:scale-[0.98]"
+              className="inline-flex h-11 items-center rounded-full bg-accent px-6 text-sm font-medium text-background shadow-[0_0_40px_-10px] shadow-accent btn-press"
             >
               Upload a file
             </a>
-            <Link
-              href="/browse"
-              className="inline-flex h-11 items-center rounded-full border border-white/12 px-6 text-sm transition-all hover:border-accent/50 hover:bg-accent/10 active:scale-[0.98]"
+            <div
             >
-              Explore files →
-            </Link>
+              <Link
+                href="/browse"
+                className="inline-flex h-11 items-center rounded-full border border-white/12 px-6 text-sm transition-all hover:border-accent/50 hover:bg-accent/10"
+              >
+                Explore files →
+              </Link>
+            </div>
           </div>
 
           <div
             id="upload"
-            className="fade-up mt-12 scroll-mt-28"
-            style={{ animationDelay: "320ms" }}
+            className="mt-12 scroll-mt-28"
           >
             <Uploader />
           </div>
@@ -139,12 +140,16 @@ export default async function Home() {
             title="Latest shares"
             hint="Fresh from the community"
             action={
-              <Link
-                href="/browse"
-                className="text-sm text-muted transition-colors hover:text-accent"
+              <div
+                className="inline-block"
               >
-                View all →
-              </Link>
+                <Link
+                  href="/browse"
+                  className="text-sm text-muted transition-colors hover:text-accent"
+                >
+                  View all →
+                </Link>
+              </div>
             }
           />
         </Reveal>
@@ -166,7 +171,7 @@ export default async function Home() {
               </p>
               <a
                 href="#upload"
-                className="mt-5 inline-flex h-10 items-center rounded-full bg-accent px-6 text-sm font-medium text-background transition-transform hover:-translate-y-0.5"
+                className="mt-5 inline-flex h-10 items-center rounded-full bg-accent px-6 text-sm font-medium text-background shadow-[0_0_40px_-8px] shadow-accent"
               >
                 Upload a file
               </a>
@@ -192,10 +197,13 @@ export default async function Home() {
             const meta = CATEGORY_META[category];
             return (
               <Reveal key={category} delay={index * 60}>
-                <Link
-                  href={`/browse?cat=${category}`}
-                  className="group flex h-full flex-col rounded-2xl border border-white/8 bg-white/[0.03] p-6 transition-all duration-300 hover:-translate-y-1 hover:border-accent/40 hover:shadow-[0_20px_60px_-30px] hover:shadow-accent/50"
+                <div
+                  className="h-full"
                 >
+                  <Link
+                    href={`/browse?cat=${category}`}
+                    className="group flex h-full flex-col rounded-2xl border border-white/8 bg-white/[0.03] p-6 hover:border-accent/40 hover:shadow-[0_20px_60px_-30px] hover:shadow-accent/50"
+                  >
                   <div className="flex items-center justify-between gap-2.5">
                     <div className="flex items-center gap-2.5">
                       <span
@@ -219,7 +227,8 @@ export default async function Home() {
                   <p className="mt-4 break-words font-mono text-xs text-muted/80">
                     {meta.examples}
                   </p>
-                </Link>
+                  </Link>
+                </div>
               </Reveal>
             );
           })}
@@ -229,12 +238,16 @@ export default async function Home() {
           <p className="mt-8 text-sm text-muted">
             Every file is tagged from its extension and shown as a badge on the
             share page — shares with mixed types also get a filter bar.{" "}
-            <Link
-              href="/about#categories"
-              className="text-foreground underline underline-offset-4 transition-colors hover:text-accent"
+            <span
+              className="inline-block"
             >
-              How categories work →
-            </Link>
+              <Link
+                href="/about#categories"
+                className="text-foreground underline underline-offset-4 transition-colors hover:text-accent"
+              >
+                How categories work →
+              </Link>
+            </span>
           </p>
         </Reveal>
       </section>
@@ -248,7 +261,9 @@ export default async function Home() {
         <div className="mt-8 grid gap-6 sm:grid-cols-3">
           {steps.map((step, index) => (
             <Reveal key={step.index} delay={index * 90}>
-              <article className="group h-full rounded-2xl border border-white/8 bg-white/[0.03] p-6 transition-all duration-300 hover:-translate-y-1 hover:border-accent/40 hover:shadow-[0_20px_60px_-30px] hover:shadow-accent/50">
+              <article
+                className="group h-full rounded-2xl border border-white/8 bg-white/[0.03] p-6 hover:border-accent/40 hover:shadow-[0_20px_60px_-30px] hover:shadow-accent/50"
+              >
                 <span className="font-mono text-xs text-accent/70">
                   {step.index}
                 </span>

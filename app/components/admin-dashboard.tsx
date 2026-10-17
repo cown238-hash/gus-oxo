@@ -1,5 +1,6 @@
 "use client";
 
+import { motion } from "motion/react";
 import { useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
@@ -36,7 +37,7 @@ function LogoutButton() {
   const [busy, setBusy] = useState(false);
 
   return (
-    <button
+    <motion.button
       type="button"
       disabled={busy}
       onClick={async () => {
@@ -45,10 +46,11 @@ function LogoutButton() {
         router.push("/");
         router.refresh();
       }}
-      className="h-9 rounded-full border border-white/12 px-4 text-sm text-muted transition-all hover:border-accent/50 hover:text-foreground active:scale-95 disabled:opacity-50"
+      whileTap={{ scale: 0.95 }}
+      className="h-9 rounded-full border border-white/12 px-4 text-sm text-muted transition-all hover:border-accent/50 hover:text-foreground disabled:opacity-50"
     >
       {busy ? "Signing out…" : "Sign out"}
-    </button>
+    </motion.button>
   );
 }
 
@@ -94,7 +96,7 @@ function ShareRow({ row }: { row: AdminShareRow }) {
   };
 
   return (
-    <div className="px-5 py-4 transition-colors hover:bg-white/[0.02] sm:px-6">
+    <div className="px-5 py-4 transition-all hover:bg-white/[0.02] sm:px-6">
       <div className="flex flex-wrap items-center gap-x-4 gap-y-3">
         <Link
           href={`/s/${row.id}`}
@@ -117,11 +119,12 @@ function ShareRow({ row }: { row: AdminShareRow }) {
           )}
         </span>
 
-        <button
+        <motion.button
           type="button"
           onClick={remove}
           disabled={busy}
-          className={`ml-auto h-9 rounded-full border px-4 text-sm transition-all active:scale-95 disabled:opacity-50 ${
+          whileTap={{ scale: 0.95 }}
+          className={`ml-auto h-9 rounded-full border px-4 text-sm transition-all disabled:opacity-50 ${
             armed
               ? "border-red-500/60 bg-red-500/10 text-red-400 hover:bg-red-500/20"
               : "border-white/12 text-muted hover:border-red-500/40 hover:text-red-400"
@@ -134,7 +137,7 @@ function ShareRow({ row }: { row: AdminShareRow }) {
               : row.valid
                 ? "Delete"
                 : "Remove index"}
-        </button>
+        </motion.button>
       </div>
 
       {armed && !error && (

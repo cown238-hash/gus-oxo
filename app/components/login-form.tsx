@@ -1,5 +1,6 @@
 "use client";
 
+import { motion } from "motion/react";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 
@@ -61,13 +62,15 @@ export default function LoginForm() {
           {error}
         </p>
       )}
-      <button
+      <motion.button
         type="submit"
         disabled={busy || password.length === 0}
-        className="mt-5 h-11 w-full rounded-full bg-accent text-sm font-medium text-background shadow-[0_0_40px_-8px] shadow-accent transition-all hover:-translate-y-0.5 active:scale-[0.98] disabled:cursor-not-allowed disabled:opacity-40 disabled:shadow-none disabled:hover:translate-y-0"
+        whileHover={{ y: -4, boxShadow: "0 0 50px -6px var(--accent)" }}
+        whileTap={{ scale: 0.98 }}
+        className="mt-5 h-11 w-full rounded-full bg-accent text-sm font-medium text-background shadow-[0_0_40px_-8px] shadow-accent disabled:cursor-not-allowed disabled:opacity-40 disabled:shadow-none"
       >
         {busy ? "Checking…" : "Sign in"}
-      </button>
+      </motion.button>
     </form>
   );
 }

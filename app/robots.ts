@@ -9,6 +9,6 @@ export default function robots(): MetadataRoute.Robots {
         disallow: ["/admin", "/api"],
       },
     ],
-    sitemap: "https://rosantoscs1997.com/sitemap.xml",
+    sitemap: "https://wksl.site/sitemap.xml",
   };
 }

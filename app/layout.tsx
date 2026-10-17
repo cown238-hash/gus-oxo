@@ -17,6 +17,9 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
+  // Canonical origin for the migrated domain: relative OG/canonical URLs
+  // resolve against this, so they never fall back to the deployment host.
+  metadataBase: new URL("https://wksl.site"),
   title: "GSO — Upload & share files and links",
   description:
     "Drop a file or paste a link, get one shareable URL in seconds — or browse what others shared on the Explore page. Fast, no account required.",

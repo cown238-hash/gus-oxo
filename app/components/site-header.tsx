@@ -1,3 +1,6 @@
+"use client";
+
+import { motion } from "motion/react";
 import Link from "next/link";
 import Logo from "./logo";
 import {
@@ -6,10 +9,10 @@ import {
   type FileCategory,
 } from "@/app/lib/share";
 
-type NavKey = "home" | "explore" | "about" | "contact" | "privacy" | null;
+type NavKey = "home" | "explore" | "charts" | "about" | "contact" | "privacy" | null;
 
 function navPill(active: boolean) {
-  return `shrink-0 rounded-full px-3 py-1.5 text-sm transition-all active:scale-[0.97] ${
+  return `shrink-0 rounded-full px-3 py-1.5 text-sm transition-all active:scale-[0.97] nav-underline ${
     active
       ? "bg-white/8 text-foreground"
       : "text-muted hover:bg-white/5 hover:text-foreground"
@@ -81,6 +84,9 @@ export default function SiteHeader({
           <Link href="/browse" className={navPill(activeNav === "explore")}>
             Explore
           </Link>
+          <Link href="/charts" className={`${navPill(activeNav === "charts")} hidden sm:block`}>
+            Charts
+          </Link>
           <Link href="/about" className={`${navPill(activeNav === "about")} hidden sm:block`}>
             About
           </Link>
@@ -90,12 +96,25 @@ export default function SiteHeader({
           <Link href="/privacy" className={`${navPill(activeNav === "privacy")} hidden lg:block`}>
             Privacy
           </Link>
-          <Link
-            href="/#upload"
-            className="ml-1 shrink-0 rounded-full bg-accent px-4 py-1.5 text-sm font-medium text-background shadow-[0_0_32px_-8px] shadow-accent transition-transform hover:-translate-y-0.5 active:scale-[0.97]"
+          <motion.div
+            animate={{
+              boxShadow: [
+                "0 0 20px -8px var(--accent)",
+                "0 0 40px -4px var(--accent)",
+                "0 0 20px -8px var(--accent)",
+              ],
+            }}
+            transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
+            whileHover={{ y: -2 }}
+            whileTap={{ scale: 0.97 }}
           >
-            Upload
-          </Link>
+            <Link
+              href="/#upload"
+              className="ml-1 shrink-0 rounded-full bg-accent px-4 py-1.5 text-sm font-medium text-background"
+            >
+              Upload
+            </Link>
+          </motion.div>
         </nav>
       </div>
 

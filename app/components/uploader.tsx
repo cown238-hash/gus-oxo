@@ -1,5 +1,6 @@
 "use client";
 
+import { motion } from "motion/react";
 import { upload } from "@vercel/blob/client";
 import Link from "next/link";
 import { useRef, useState } from "react";
@@ -222,7 +223,7 @@ export default function Uploader() {
           />
           <button
             onClick={copy}
-            className="h-11 shrink-0 rounded-full bg-accent px-6 text-sm font-medium text-background shadow-[0_0_40px_-8px] shadow-accent transition-transform hover:-translate-y-0.5 active:scale-[0.98]"
+            className="h-11 shrink-0 rounded-full bg-accent px-6 text-sm font-medium text-background shadow-[0_0_40px_-8px] shadow-accent transition-all hover:-translate-y-1 hover:shadow-[0_0_50px_-6px] hover:shadow-accent active:scale-[0.98] btn-press"
           >
             {copied ? "Copied!" : "Copy link"}
           </button>
@@ -284,7 +285,7 @@ export default function Uploader() {
   return (
     <div className="rounded-3xl border border-white/8 bg-white/[0.03] p-6 sm:p-8">
       {/* Drop zone */}
-      <div
+      <motion.div
         onDragOver={(event) => {
           event.preventDefault();
           setDragging(true);
@@ -304,18 +305,24 @@ export default function Uploader() {
             inputRef.current?.click();
           }
         }}
-        className={`flex cursor-pointer flex-col items-center justify-center rounded-2xl border-2 border-dashed px-6 py-12 text-center transition-all duration-300 ${
-          dragging
-            ? "scale-[1.01] border-accent bg-accent/10 shadow-[0_0_60px_-15px] shadow-accent"
-            : "border-white/12 hover:border-accent/40 hover:bg-white/[0.02]"
-        }`}
+        animate={{
+          scale: dragging ? 1.02 : 1,
+          borderColor: dragging ? "var(--accent)" : "rgba(255,255,255,0.12)",
+          backgroundColor: dragging ? "color-mix(in oklab, var(--accent) 10%, transparent)" : "transparent",
+          boxShadow: dragging ? "0 0 60px -15px var(--accent)" : "0 0 0px 0px transparent",
+        }}
+        whileHover={{ scale: 1.01 }}
+        transition={{ type: "spring", stiffness: 300, damping: 25 }}
+        className="flex cursor-pointer flex-col items-center justify-center rounded-2xl border-2 border-dashed px-6 py-12 text-center"
       >
-        <svg
+        <motion.svg
           viewBox="0 0 24 24"
           fill="none"
           stroke="currentColor"
           strokeWidth="1.5"
-          className="h-8 w-8 text-accent transition-transform duration-300"
+          className="h-8 w-8 text-accent"
+          animate={{ y: dragging ? -4 : 0 }}
+          transition={{ type: "spring", stiffness: 400, damping: 20 }}
           aria-hidden
         >
           <path
@@ -323,7 +330,7 @@ export default function Uploader() {
             strokeLinejoin="round"
             d="M12 16.5V4.5m0 0L7.5 9M12 4.5 16.5 9M4.5 16.5v1.5a2 2 0 0 0 2 2h11a2 2 0 0 0 2-2v-1.5"
           />
-        </svg>
+        </motion.svg>
         <p className="mt-4 text-sm font-medium">
           Drag files here, or{" "}
           <span className="text-accent underline underline-offset-4">browse</span>
@@ -341,7 +348,7 @@ export default function Uploader() {
             event.target.value = "";
           }}
         />
-      </div>
+      </motion.div>
 
       {/* Link input */}
       <div className="mt-5 flex gap-3">
@@ -479,13 +486,15 @@ export default function Uploader() {
       )}
 
       <div className="mt-6 flex justify-end">
-        <button
+        <motion.button
           onClick={submit}
           disabled={!hasContents || busy}
-          className="h-11 rounded-full bg-accent px-7 text-sm font-medium text-background shadow-[0_0_40px_-8px] shadow-accent transition-all hover:-translate-y-0.5 active:scale-[0.98] disabled:cursor-not-allowed disabled:opacity-40 disabled:shadow-none disabled:hover:translate-y-0"
+          whileHover={{ y: -4, boxShadow: "0 0 50px -6px var(--accent)" }}
+          whileTap={{ scale: 0.98 }}
+          className="h-11 rounded-full bg-accent px-7 text-sm font-medium text-background shadow-[0_0_40px_-8px] shadow-accent disabled:cursor-not-allowed disabled:opacity-40 disabled:shadow-none"
         >
           {busy ? "Uploading…" : "Create share link"}
-        </button>
+        </motion.button>
       </div>
     </div>
   );
