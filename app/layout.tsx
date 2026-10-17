@@ -18,6 +18,10 @@ const geistMono = Geist_Mono({
 });
 
 const adsenseAccount = process.env.NEXT_PUBLIC_ADSENSE_ID;
+// Extra Google Search Console tokens (HTML-tag method), one per verified
+// property. The first entry is the original property token; additional ones
+// can be supplied through the environment without a code change.
+const googleSiteVerification = process.env.GOOGLE_SITE_VERIFICATION;
 
 export const metadata: Metadata = {
   // Canonical origin for the migrated domain: relative OG/canonical URLs
@@ -58,7 +62,10 @@ export const metadata: Metadata = {
     },
   },
   verification: {
-    google: "e2zEu_Xq4SgJHnQdrK-ku_i_fqF-0YJfv3nInB2IZtM",
+    google: [
+      "e2zEu_Xq4SgJHnQdrK-ku_i_fqF-0YJfv3nInB2IZtM",
+      ...(googleSiteVerification ? [googleSiteVerification] : []),
+    ],
   },
   // AdSense ownership verification. Uses the same public publisher id as the
   // ad script so it can be rotated through one env var.
